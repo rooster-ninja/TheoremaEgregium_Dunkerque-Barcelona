@@ -12,8 +12,6 @@ The Delambre–Méchain meridian survey (1792–1798) re-read from inside the su
 | Perpignan base: measured − carried through 115 triangles from Melun | 0.1485 toise = 28.9 cm | 25 ppm over ≈ 900 km |
 | Radius from spherical excess of observed angles (91 triangles) | **5 360 km** | 1σ 5 160–5 590 km; 0.66″/triangle systematic bias |
 | Same, constant bias per triangle fitted | 5 700 km | 1σ 5 200–6 300 km |
-| Flattening from the 8 seconds-pendulum lengths (Tome IV), via Clairaut | 1/313 | 1σ 1/303–1/323 (needs star latitudes and the sidereal day) |
-| Flattening from Tome III's 6 degree lengths | 1/240 | 1σ 1/185–1/339 (needs star latitudes) |
 
 From the triangles alone the survey shows a curved Earth of roughly the right size, but only to about ±10–15%: the curvature signal is ≈ 1.5″ per triangle. The oblate figure needs the astronomical reference too. All results are fallible, inductive measurements, good to the sigma stated.
 
@@ -25,7 +23,7 @@ From the triangles alone the survey shows a curved Earth of roughly the right si
 | `supplemental/` | `Melun_base_reduction.xlsx` (the base reduction, every step a formula) and `Triangle_chain_Dunkerque_Barcelona.xlsx` (115-triangle chain, Perpignan check, curvature fit, source discrepancies) |
 | `sources/` | Page extracts from the scanned volumes. `*_annotated.pdf` carry the checks as PDF notes: yellow = a step, green = verified, red = misprint or open question |
 | `data/` | Transcriptions as CSV: the Tableau complet, the Tome I observed angle sums, and the list of discrepancies found in the printed source |
-| `scripts/` | Python that reproduces every number: `check.py` (transcription checks), `chain.py` (the chain and the Perpignan confirmation), `fitR.py` (radius from excess), `pendulum_and_degrees.py` (flattening) |
+| `scripts/` | Python that reproduces every number: `check.py` (transcription checks), `chain.py` (the chain and the Perpignan confirmation), `fitR.py` (radius from excess) |
 
 Run the scripts from `scripts/` with Python 3 and no dependencies: `python3 fitR.py`.
 
