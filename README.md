@@ -2,7 +2,9 @@
 
 The Delambre–Méchain meridian survey (1792–1798) re-read from inside the surface only, as Gauss's Theorema Egregium allows. Lengths come from the measured Melun base; curvature comes from the observed angles. No latitudes, azimuths or stars go into the curvature result.
 
-**Read the report:** [`index.html`](index.html) (open it in a browser, or through GitHub Pages if enabled).
+## 📄 [Read the report](https://htmlpreview.github.io/?https://github.com/rooster-ninja/TheoremaEgregium_Dunkerque-Barcelona/blob/main/index.html)
+
+Opens `index.html` rendered in the browser. Once GitHub Pages is on for this repo, the permanent link is <https://rooster-ninja.github.io/TheoremaEgregium_Dunkerque-Barcelona/>.
 
 ## Results
 
