@@ -17,7 +17,7 @@ Hosted on GitHub Pages from `index.html`. It links directly to the spreadsheets 
 | Gauss's measure of curvature k = Σ(A·ε)/Σ(A²) | 3.48 × 10⁻⁸ km⁻² | 1σ 3.19–3.76 × 10⁻⁸; modern 2.46 × 10⁻⁸ |
 | Regional R: north / centre / south | 5 880 / 5 550 / 4 930 km | ± 710 / 400 / 190 km |
 
-From the triangles alone the survey shows the strip is, on average, positively curved, but with a large deviation in the radius: 1 010 km (16%) short of 6 371 km, and a 950 km spread between regions. The theorem cannot show constant curvature, a closed sphere or the flattening (35× below its resolution here); those need the astronomical reference. The volumes also record corrections made toward the expected figure (angles adjusted, series chosen, a latitude changed), so their own results are not an independent test. All results are fallible, inductive measurements, good to the sigma stated.
+From the triangles alone the survey shows the strip is, on average, positively curved, but with a large deviation in the radius: 1 010 km (16%) short of 6 371 km, and a 950 km spread between regions. The theorem cannot show constant curvature, a closed sphere or the flattening (35× below its resolution here); those need the astronomical reference. Modern geodesy relies on the sky even more: the reference frame comes from satellites (GNSS, SLR, DORIS) and VLBI, oriented to distant quasars, and triangulation chains like this one are no longer used to determine the figure. The volumes also record corrections made toward the expected figure (angles adjusted, series chosen, a latitude changed), so their own results are not an independent test. All results are fallible, inductive measurements, good to the sigma stated.
 
 ## Contents
 
