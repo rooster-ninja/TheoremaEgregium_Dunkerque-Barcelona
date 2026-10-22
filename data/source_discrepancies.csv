@@ -1,0 +1,33 @@
+triangle,station,column,discrepancy
+34,Dammartin,arc,Printed 21667.4530; its own log 4.33580.78830 gives 21667.4540 (1 mm slip in source)
+38,Bellassise,arc,Left log-sine 4.12404.14756 and right log 4.12404.27126 differ by 1.237e-6; arc-sine correction should be 1.201e-6 (≈1 mm inconsistency in source; printed arc follows the right-hand log)
+40,Brie,logsinSide,"Printed 3.96319.10176 is 1.0e-6 too large for the triangle (Montlhéri side and the base from triangle 39 agree); Brie–Tour de Croy is a side branch, not on the main chain"
+41,Montlhéri,arc,Printed arc 12374.2130 (log 4.09251.75892) is 5 mm longer than the left-page log-sine 4.09251.63762 implies (12374.2081); chain uses log-sines
+44,Malvoisine,arc,"Montlhéri–Torfou printed 6212.1595 (chord 6212.1579), but both its logs (3.79323.29524 / .32141) and its reuse as base of triangle 46 give 6212.0253: misprint of 0.134 toise (26 cm) in the arc and chord columns only"
+50,Bromeille,logsinA,"Printed log-sine 9.95884.42207 corresponds to 114°33′6.0″, printed angle is 114°33′4.0″ (secondary point; log is the one consistent with the chain)"
+51,Méréville,logsinA,"Printed log-sine 9.99969.66886 corresponds to 92°8′28″ vs printed 92°8′22″ (secondary point, near 90° so effect on sides is 4e-8 in log)"
+52,Pithiviers,logsinA,Printed log-sine 9.99975.66805 corresponds to 91°55′3.92″ vs printed 91°55′6.18″; sides follow the log
+53,Châtillon,logsinA,"Printed log-sine 9.99794.75018 corresponds to 95°33′57.67″ vs printed 95°33′52.13″ (seconds digit partly illegible, value fixed by the angle sum); sides follow the log"
+54,Châtillon,logsinA,Printed log-sine 9.99940.30128 corresponds to 93°0′12.62″ vs printed angle 93°0′17.48″; sides follow the log
+55,Châtillon,arc,Châteauneuf–Orléans printed arc 12053.9075 (right log 4.08112.78539) is 1.7 cm shorter than the left-page log-sine implies (12053.9241); chain (triangle 56) follows the left page
+56,Orléans,arc,Printed arc 13880.6212 vs its log 4.14240.88018 = 13880.6180 (3 mm)
+59,Oison,base,Triangle marked 'inutile' (whole-second plane angles); base Châteauneuf–Vouzon differs from triangle 56 by 7.8e-7 in log
+60,Vouzon,arc,Triangle marked 'inutile'; printed arc 13792.0542 vs its log 4.13962.74192 = 13792.0054
+61,Sainte-Montaine,logsinA,Printed 9.93854.09955 is a misprint for 9.93854.00957 (value from the angle; also the only value consistent with the base from triangle 58)
+61,Soême,arc,Printed arc 13468.8773 and chord 13468.8677 vs log 4.12930.59368 = 13468.0877: misprint of 0.79 toise in the arc/chord columns
+63,Ennordre,logsinA,Triangle marked 'inutile'; printed log-sine 9.71598.03589 corresponds to 31°19′49.46″ vs printed 31°19′46.0″
+64,Ennordre,arc,Soême–Méry printed arc 11930.1173 (right log 4.07664.47135) vs left-page log-sine 4.07664.14520 → 11930.0542 (6.3 cm); chain follows the left page
+66,Morogues,arc,Méry–Bourges printed arc 12170.6752 (chord 12170.6681) vs its log 4.08531.40716 = 12170.6584 (1.7 cm)
+86,Bastide,excess,"Printed excesses 0.99 + 0.55 + 0.94 = 2.48, but the printed total and the angle sum are 3.48 (slip in one excess entry)"
+87,Bastide,arc,Violan–Montsalvy printed arc 23960.5881 (chord printed '13960.5465') vs its log 4.37948.79799 = 23960.0643: misprint of 0.52 toise (1 m) in the arc/chord columns
+88,Bastide,arc,Printed arc 25234.2447 is 2 mm longer than the left-page log-sine implies (25234.2428)
+102,Tauch,arc,Printed arc 7046.8060 vs left-page log-sine 7046.8078 (1.8 mm)
+109,Secalm,arc,Printed arc 10655.1546 (= its right log) vs left-page log-sine 10655.1273 (2.7 cm)
+112,Matagalls,arc,Printed arc 20346.5675 is smaller than its own printed chord 20346.9345 (impossible); log 4.30849.96882 gives 20346.9673: arc misprint 0.40 toise
+112,Rodos,arc,Printed arc 17765.2057 is smaller than its own printed chord 17765.4847; log 4.24957.75990 gives 17765.5068: arc misprint 0.30 toise
+92,Saint-George,arc,Printed arc 15576.5567 vs its log 4.19247.15413 = 15576.5596 (6 mm)
+96,Montredon,arc,Printed arc 12576.7110 (chord 12576.7032) vs its log 4.09956.66793 = 12576.6994 (2.3 cm)
+98,Nore,arc,Printed arc 12185.0318 vs its log 4.08582.69587 = 12185.0400 (1.6 cm)
+98,Alaric,arc,Printed arc 12827.7187 vs its log 4.10814.93271 = 12827.7157 (6 mm)
+99,Alaric,arc,Printed arc 20040.7210 (chord 20040.6900) vs its log 4.30191.23412 = 20040.6748 (9 cm)
+43,Malvoisine,metres,Lieursaint–Melun (the Melun base) printed 11832.4063 m; 6075.9001 t × 1.949037 = 11842.152 m. Misprint of 9.7 m in the metres column (the other row converts correctly)

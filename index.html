@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Meridian by Gauss</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Instrument+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js" onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}]})"></script>
+<style>
+/* Layout: one reading column of numbered cards, two-up where cards are short; sources behind a button, as on the Surface Lab pages */
+:root{
+  --paper:#f3efe5; --card:#faf7f0; --ink:#1b1a17; --ink-2:#4a4740; --rule:#ddd6c6;
+  --accent:#3b86a8; --quote:#e08a3c; --quote-bg:#fdf6ea; --good:#3f8a4a; --bad:#b8433a; --dark:#1b1a17;
+  --serif:'DM Serif Display',Georgia,'Times New Roman',serif;
+  --sans:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.55 var(--sans)}
+.wrap{max-width:1240px;margin:0 auto;padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.eyebrow{font:500 13px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin:0 0 14px}
+h1{font:400 clamp(34px,5vw,54px)/1.08 var(--serif);margin:0 0 18px;text-wrap:balance}
+.lead{max-width:62rem;font-size:19px;margin:0 0 28px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.card{position:relative;background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:22px 24px 20px;min-width:0}
+.card.wide{grid-column:1/-1}
+.card.key{border:3px solid var(--accent)}
+.card h2{font:500 13px/1.3 var(--mono);letter-spacing:.16em;text-transform:uppercase;margin:0 0 12px;padding-right:80px}
+.card p{margin:0 0 10px}
+.explain{position:absolute;top:14px;right:16px;font:500 12px var(--mono);letter-spacing:.12em;color:var(--accent);background:none;border:0;cursor:pointer;padding:4px}
+.explain:focus-visible,.srcbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.more{border-top:1px dashed var(--rule);margin-top:10px;padding-top:10px;color:var(--ink-2);font-size:15.5px}
+blockquote{margin:12px 0;padding:12px 18px;border-left:5px solid var(--quote);background:var(--quote-bg);font:600 17px/1.45 var(--sans)}
+.big{font:400 clamp(30px,4vw,44px)/1.1 var(--serif);margin:4px 0 6px}
+.big small{font:15px var(--sans);color:var(--ink-2)}
+.tbl{overflow-x:auto;margin:8px 0 6px}
+table{border-collapse:collapse;width:100%;font-size:15px;font-variant-numeric:tabular-nums}
+th{font:500 11.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);text-align:left;padding:6px 8px;border-bottom:1px solid var(--rule);white-space:nowrap}
+td{padding:6px 8px;border-bottom:1px solid var(--rule);vertical-align:top}
+td.n,th.n{text-align:right;white-space:nowrap}
+tr.total td{font-weight:600}
+.good{color:var(--good)} .bad{color:var(--bad)}
+.note{font-size:14px;color:var(--ink-2)}
+.katex-display{margin:.6em 0;overflow-x:auto;overflow-y:hidden}
+svg text{font-family:var(--sans)}
+.foot{display:flex;justify-content:flex-end;margin-top:26px}
+.srcbtn{background:var(--dark);color:#f3efe5;font:14px var(--mono);border:0;border-radius:6px;padding:10px 16px;cursor:pointer}
+#sources{margin-top:16px}
+#sources ol{padding-left:22px;font-size:15px} #sources li{margin-bottom:8px}
+a{color:var(--accent)}
+@media (max-width:820px){.grid{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:no-preference){.more{animation:fade .18s ease-out}@keyframes fade{from{opacity:.4}to{opacity:1}}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<p class="eyebrow">Theorema Egregium · Dunkerque to Barcelona, 1792–1798</p>
+<h1>Measure the triangles. Gauss gives k, then R.</h1>
+<p class="lead">Delambre and Méchain's survey, read only from inside the surface. The lengths come from the Melun base, laid ruler by ruler. The curvature comes from the angles they observed, and from nothing else: no latitudes, no azimuths, no stars. Every number below is a raw printed value from the four volumes of <em>Base du système métrique décimal</em> (1806–1821), recomputed here. Steps marked <em>worked out here</em> are not in the volumes.</p>
+
+<div class="grid">
+
+<section class="card">
+<button class="explain" aria-expanded="false">EXPLAIN</button>
+<h2>1 · The theorem</h2>
+<p>Gauss, <em>Disquisitiones generales circa superficies curvas</em> (1827), Art. 12:</p>
+<blockquote>"If a curved surface is developed upon any other surface whatever, the measure of curvature in each point remains unchanged."</blockquote>
+<p>Curvature \(k\) depends only on lengths and angles measured on the surface. A sphere has \(k=1/R^2\) everywhere; a plane has \(k=0\).</p>
+<div class="more" hidden>So a surveyor who never looks up can still find out whether the ground is curved, and how much. That is the only claim this page tests.</div>
+</section>
+
+<section class="card key">
+<button class="explain" aria-expanded="false">EXPLAIN</button>
+<h2>2 · Triangles</h2>
+<p>For a triangle of shortest lines on a sphere, the angles exceed 180° by the area over \(R^2\) (Art. 20):</p>
+$$A+B+C-\pi=\iint k\,d\sigma=\frac{\text{Area}}{R^{2}}$$
+<p>Area comes from the measured distances. The excess comes from the observed angles. Solve for \(R\).</p>
+<div class="more" hidden>A typical survey triangle is about 280 km². On a 6 371 km Earth its angles add up to 180° + 1.45″. The whole curvature signal is that 1.45″.</div>
+</section>
+
+<section class="card">
+<button class="explain" aria-expanded="false">EXPLAIN</button>
+<h2>3 · The length: Melun base</h2>
+<p>3 021 placements of Borda's 2-toise platinum rulers (Tome II pp. 41–44), every correction recomputed:</p>
+<div class="tbl"><table>
+<thead><tr><th>Step</th><th class="n">Correction (t)</th><th class="n">Total (t)</th></tr></thead>
+<tbody>
+<tr><td>Rulers + languettes + plumb cord − slope</td><td class="n"></td><td class="n">6 075.932363</td></tr>
+<tr><td>Overshoot, bend, sighting, arc→chord, vernier</td><td class="n">−0.208552</td><td class="n">6 075.723811</td></tr>
+<tr><td>Down to sea level (80 m)</td><td class="n">−0.077350</td><td class="n">6 075.646461</td></tr>
+<tr><td>Rulers to 13° Réaumur</td><td class="n">+0.249970</td><td class="n">6 075.896431</td></tr>
+<tr class="total"><td>Chord → arc</td><td class="n">+0.000870</td><td class="n">6 075.897301</td></tr>
+</tbody></table></div>
+<p class="note">= 11 842.146 m at 864/443.295936 m per toise. Delambre: the uncertainty "ne monte donc guère qu'à un pouce" (2.7 cm).</p>
+<div class="more" hidden>Temperature (+49 cm) and sea level (−15 cm) are the big terms. Delambre prints the 6th and 7th decimals after a second dot (0.00057.8 = 0.000578); read that way, the chain adds up exactly.</div>
+</section>
+
+<section class="card">
+<button class="explain" aria-expanded="false">EXPLAIN</button>
+<h2>4 · The chain, and its check</h2>
+<p>115 triangles carry Melun's length to a second measured base at Perpignan. With the observed angles of Tome I:</p>
+<div class="tbl"><table>
+<thead><tr><th>Perpignan base</th><th class="n">Toises</th><th class="n">Metres</th></tr></thead>
+<tbody>
+<tr><td>Measured on the ground</td><td class="n">6 006.2487</td><td class="n">11 706.398</td></tr>
+<tr><td>Carried through the chain from Melun</td><td class="n">6 006.1002</td><td class="n">11 706.109</td></tr>
+<tr class="total"><td>Difference</td><td class="n">0.1485</td><td class="n">0.289</td></tr>
+</tbody></table></div>
+<p>29 cm after about 900 km of triangles: <strong>25 parts per million</strong>. Delambre printed "0ᵗ14849 … 10ᵖ 8ˡ3" (Tome II p. 703); worked out here to within 0.02 mm of his figure.</p>
+<div class="more" hidden>He then removed the 29 cm by nudging the angles of triangles 44–100 by 0.01–0.1″ (pp. 704–705). Those adjusted angles were not used for curvature.</div>
+</section>
+
+<section class="card wide key">
+<button class="explain" aria-expanded="false">EXPLAIN</button>
+<h2>5 · The curvature, from angles alone</h2>
+<p class="big">R = 5 360 km <small>1σ 5 160 – 5 590 km · 91 triangles · 25 900 km² · worked out here</small></p>
+<svg viewBox="0 0 900 300" role="img" aria-label="Radius from angle excess: 5 360 km, below the modern 6 371 km" style="width:100%;height:auto;display:block;margin:6px 0 4px">
+  <g fill="#4a4740" font-size="13">
+    <line x1="300" x2="300" y1="20" y2="250" stroke="#ddd6c6"/><text x="300" y="272" text-anchor="middle">4 500</text>
+    <line x1="420" x2="420" y1="20" y2="250" stroke="#ddd6c6"/><text x="420" y="272" text-anchor="middle">5 000</text>
+    <line x1="540" x2="540" y1="20" y2="250" stroke="#ddd6c6"/><text x="540" y="272" text-anchor="middle">5 500</text>
+    <line x1="660" x2="660" y1="20" y2="250" stroke="#ddd6c6"/><text x="660" y="272" text-anchor="middle">6 000</text>
+    <line x1="780" x2="780" y1="20" y2="250" stroke="#ddd6c6"/><text x="780" y="272" text-anchor="middle">6 500</text>
+    <text x="880" y="272" text-anchor="end">km</text>
+    <line x1="749" x2="749" y1="14" y2="250" stroke="#1b1a17" stroke-dasharray="4 3"/>
+    <text x="744" y="14" text-anchor="end" fill="#1b1a17">modern 6 371 km</text>
+  </g>
+  <g font-size="14" fill="#1b1a17">
+    <text x="286" y="54" text-anchor="end">All 91 triangles</text>
+    <text x="286" y="98" text-anchor="end">All 91, bias fitted</text>
+    <text x="286" y="142" text-anchor="end">North, 1–43 (30)</text>
+    <text x="286" y="186" text-anchor="end">Centre, 44–89 (35)</text>
+    <text x="286" y="230" text-anchor="end">South, 90–115 (26)</text>
+  </g>
+  <g stroke-width="2.5">
+    <line x1="457.7" x2="562.8" y1="50" y2="50" stroke="#3b86a8"/><circle cx="506.9" cy="50" r="6" fill="#3b86a8"/>
+    <line x1="470.4" x2="737" y1="94" y2="94" stroke="#a9a397"/><circle cx="584.4" cy="94" r="6" fill="#a9a397"/>
+    <line x1="460.8" x2="802" y1="138" y2="138" stroke="#a9a397"/><circle cx="631.4" cy="138" r="6" fill="#a9a397"/>
+    <line x1="457.4" x2="648.5" y1="182" y2="182" stroke="#a9a397"/><circle cx="553" cy="182" r="6" fill="#a9a397"/>
+    <line x1="356.6" x2="449.3" y1="226" y2="226" stroke="#a9a397"/><circle cx="403" cy="226" r="6" fill="#a9a397"/>
+  </g>
+  <g font-size="13" fill="#4a4740" text-anchor="middle">
+    <text x="506.9" y="38">5 362</text><text x="584.4" y="82">5 685</text><text x="631.4" y="126">5 881</text><text x="553" y="170">5 554</text><text x="403" y="214">4 929</text>
+  </g>
+</svg>
+<p>The ground is clearly curved: the observed angles average 2.11″ over 180°, where a plane gives 0″. But the radius comes out 16% low. Each triangle closes 0.66″ too wide for a 6 371 km Earth, about 0.2″ per angle, and the bias grows southward into Méchain's mountain triangles. Fitting a constant bias per triangle absorbs 0.29″ and gives 5 700 km (1σ 5 200–6 300 km), which includes the true value.</p>
+<div class="more" hidden>Dot = least-squares fit of excess = area/R², whisker = 1σ from the closure scatter (1.8″ r.m.s. per triangle). Only triangles with all three angles observed are used; an angle marked * in Tome I was concluded from the other two, so its sum carries nothing. Uneven air bending sight lines sideways is the likely cause of the bias; that is a hypothesis, not tested here.</div>
+</section>
+
+<section class="card wide">
+<button class="explain" aria-expanded="false">EXPLAIN</button>
+<h2>6 · Errors, and the error bars they set</h2>
+<p>R scales as √(area / excess). A part per million in the sides moves R by a part per million; a fraction of an arcsecond in the angles moves it by percent.</p>
+<div class="tbl"><table>
+<thead><tr><th>Error</th><th class="n">Size</th><th>On distances</th><th>On R</th></tr></thead>
+<tbody>
+<tr><td>Random closure error of observed angles</td><td class="n">1.8″ r.m.s.</td><td>none</td><td class="bad">±4% (1σ)</td></tr>
+<tr><td>Systematic angle bias (refraction, signal phase, centring)</td><td class="n">+0.66″ / triangle</td><td>none</td><td class="bad">−16% if ignored</td></tr>
+<tr><td>Melun → Perpignan misclosure</td><td class="n">29 cm, 25 ppm</td><td>the real scale error</td><td class="good">≈ 0.001%</td></tr>
+<tr><td>Bases in the table vs measurement pages</td><td class="n">+2.8 / −6.8 mm</td><td>&lt; 1 ppm</td><td class="good">negligible</td></tr>
+<tr><td>3 021 vs 3 038 rulers; rounded mean temperature</td><td class="n">2.7 and 1.3 mm</td><td>&lt; 0.3 ppm</td><td class="good">negligible</td></tr>
+<tr><td>Log sines not matching printed angles (triangles 52–54)</td><td class="n">to 5.5″</td><td>1.6 cm at Perpignan</td><td class="good">none</td></tr>
+<tr><td>Misprints in toise and metre columns (≈ 30)</td><td class="n">1 mm – 1 m</td><td>none: logs are authoritative</td><td class="good">none</td></tr>
+</tbody></table></div>
+<p class="note">Worst misprints: triangle 112 arcs printed shorter than their own chords (0.40 and 0.30 t); Violan–Montsalvy 1 m off (triangle 87); the Melun base's metres printed 11 832.41 for 11 842.15. Every one is listed in <code>data/source_discrepancies.csv</code> and marked in red on the annotated pages.</p>
+<div class="more" hidden>The transcription was checked five ways per row: log sine against its angle, sine rule inside the triangle, base carried from the earlier triangle, arc against its logarithm, angle sum against excess. About 40 misreads were caught that way; each remaining flag was confirmed on the scan.</div>
+</section>
+
+<section class="card wide">
+<button class="explain" aria-expanded="false">EXPLAIN</button>
+<h2>7 · An oblate spheroid in a thin atmosphere: the rest of the record</h2>
+<div class="tbl"><table>
+<thead><tr><th>Evidence</th><th>What the record shows</th><th>Result, worked out here</th><th>Uses stars?</th></tr></thead>
+<tbody>
+<tr><td>Spherical excess</td><td>Observed angle sums exceed 180° in proportion to area</td><td>Curved, R ≈ 5 400–5 700 km</td><td class="good">no</td></tr>
+<tr><td>Seconds pendulum, 8 stations (Tome IV pp. 573–575)</td><td>741.252 mm at Formentera 38° 40′ → 742.723 mm at Unst 60° 45′</td><td>Fit l = A + B sin²L, Clairaut: flattening <strong>1/313</strong> (1σ 1/303–1/323); today 1/298</td><td>latitudes, and the sidereal day inside Clairaut's 0.00865</td></tr>
+<tr><td>Length of a degree (Tome III p. 548)</td><td>57 097 t at 51° 15′ → 56 947 t at 42° 17′</td><td>Mean R 6 367 km; flattening 1/240 (1σ 1/185–1/339)</td><td>latitudes</td></tr>
+<tr><td>Gravity anomalies (Tome IV p. 575)</td><td>Pendulum falls short of the ellipsoid by up to 0.061 mm at Bordeaux, less at Figeac</td><td>Local mass on top of the spheroid; same cause as plumb-line deflection</td><td>latitudes</td></tr>
+<tr><td>Refraction (Tome II)</td><td>Reciprocal zenith distances between stations</td><td>Air thinning with height; not extracted here</td><td class="good">no</td></tr>
+<tr><td>Sea-level reduction (Tome II pp. 43–44)</td><td>Each base projected to one level surface: −15 cm at 80 m</td><td>A level surface curving with the Earth</td><td class="good">no</td></tr>
+</tbody></table></div>
+<p class="note">Biot's own pendulum formula in Tome IV assumes Laplace's 1/307; the 1/313 above is an independent fit to his eight observed lengths. Nothing in the survey measures what the Earth is suspended in, or friction.</p>
+<div class="more" hidden>The pendulum is the strongest independent line, about ±3% on the flattening, against roughly ±30% from the degree lengths. Both need star latitudes; Clairaut's theorem also needs the rotation rate.</div>
+</section>
+
+<section class="card wide">
+<h2>8 · Conclusion</h2>
+<p>Measured entirely from inside the surface, as the Theorema Egregium allows, the survey shows the ground is curved, with R = 5 360 km (1σ 5 160–5 590 km): the right size, 16% low, good to about ±10–15% once systematic error is admitted. The limit is the angles, not the distances.</p>
+<p>The survey's reference frame comes from the stars as well. How many degrees each stretch spans, and so the flattening, rests on star latitudes at Dunkerque, Paris, Évaux, Carcassonne and Montjuïc; the chain's orientation rests on star azimuths; Clairaut's argument rests on the sidereal day. Even then the sections scatter, and Delambre had to add the Peru arc to adopt 1/334.</p>
+<p>Each of these is a fallible, inductive measurement, good to a stated sigma. Together, the triangles give the lengths and the curvature, the stars give the latitudes and orientation, and the pendulum gives gravity. They point to an oblate spheroid; no one of them alone shows it.</p>
+</section>
+
+</div>
+
+<div class="foot"><button class="srcbtn" id="srcbtn" aria-expanded="false" aria-controls="sources">Sources for this page (pages and quotes)</button></div>
+<section class="card" id="sources" hidden>
+<h2>Sources: pages and quotes</h2>
+<p>Delambre &amp; Méchain, <em>Base du système métrique décimal</em>, 4 vols, Paris 1806–1821. ETH-Bibliothek Zürich, Rar 10260, <a href="https://doi.org/10.3931/e-rara-11803">doi:10.3931/e-rara-11803</a>. Page extracts are in <code>sources/</code>; annotated copies carry the checks as PDF notes.</p>
+<ol>
+<li>Tome I pp. 513–542, <em>Tableau des triangles</em>, column "Angles observés": the observed angle sums. <a href="sources/Source_TI_p513-542_Tableau_des_triangles_observed_angles.pdf">PDF</a></li>
+<li>Tome II pp. 16–17, reduction of the broken line to the straight line. <a href="sources/Source_TII_p16-17_broken-line_formula.pdf">PDF</a></li>
+<li>Tome II pp. 31–58, <em>Mesure des bases</em>, Melun and Perpignan. <a href="sources/Source_TII_p31-58_Mesure_des_bases.pdf">PDF</a>; p. 39 page totals <a href="sources/Source_TII_p39_page_totals_No_II.pdf">PDF</a></li>
+<li>Tome II pp. 41–44, the Melun reduction: "Arc de la base … 6075.89730"; "L'incertitude … ne monte donc guère qu'à un pouce" (p. 31). <a href="sources/Source_TII_p41-44_reduction_chain_annotated.pdf">annotated PDF</a></li>
+<li>Tome II p. 703: "suivant la mesure, nous avons eu … 3.77860.30659 … La différence est 0.00001.07371 … 0ᵗ14849 … 10ᵖ 8ˡ3". pp. 704–705, the angle adjustments; p. 703: "Tous les calculs ont été faits sur les logarithmes". <a href="sources/Source_TII_p701-705_Calcul_des_triangles_annotated.pdf">annotated PDF</a></li>
+<li>Tome II pp. 800–844, <em>Tableau complet des triangles</em>: the 115 triangles. <a href="sources/Source_TII_p800-844_Tableau_complet_annotated.pdf">annotated PDF</a></li>
+<li>Tome III p. 548, degrees by section, Greenwich to Formentera. <a href="sources/Source_TIII_p548_degrees_by_section.pdf">PDF</a></li>
+<li>Tome IV pp. 573–575, seconds pendulum at eight stations; "un aplatissement égal à 0,00326". <a href="sources/Source_TIV_p573-576_seconds_pendulum.pdf">PDF</a></li>
+<li>Gauss, <em>General Investigations of Curved Surfaces</em> (1827; trans. Morehead &amp; Hiltebeitel, 1902), Art. 12 and Art. 20.</li>
+<li>Supplementals: <a href="supplemental/Melun_base_reduction.xlsx">Melun_base_reduction.xlsx</a>, <a href="supplemental/Triangle_chain_Dunkerque_Barcelona.xlsx">Triangle_chain_Dunkerque_Barcelona.xlsx</a>. Data and scripts: <code>data/</code>, <code>scripts/</code>.</li>
+</ol>
+</section>
+</div>
+<script>
+document.querySelectorAll('.explain').forEach(b=>b.addEventListener('click',()=>{const m=b.parentElement.querySelector('.more');const open=m.hidden;m.hidden=!open;b.setAttribute('aria-expanded',open);b.textContent=open?'CLOSE':'EXPLAIN';}));
+const sb=document.getElementById('srcbtn'),sp=document.getElementById('sources');
+sb.addEventListener('click',()=>{sp.hidden=!sp.hidden;sb.setAttribute('aria-expanded',!sp.hidden);if(!sp.hidden)sp.scrollIntoView({behavior:'smooth',block:'start'});});
+</script>
+</body>
+</html>
