@@ -24,7 +24,7 @@ From the triangles alone the survey shows the strip is, on average, positively c
 
 | Method | Printed to | Accuracy claimed | What the record's own checks show |
 | --- | --- | --- | --- |
-| Base lines, platinum rulers | 10⁻⁶ toise | 1 pouce in 11.8 km (2.3 ppm) | plausible; windy-day remeasure 33 ppm over 265 m |
+| Base lines, platinum rulers | 10⁻⁶ toise | 1 pouce in 11.8 km (2.3 ppm) | **unverified**: no independent check; the only base-to-base test misses by 29 cm (25 ppm), ten times the claim |
 | Angles, repeating circle | 0.01″ | "le résultat le plus probable" | ≈ 1″ per angle; +0.66″ systematic per triangle |
 | Chain of 115 triangles | 0.2 mm on 20 km | bases "plus certaines encore que nos angles" | 25 ppm misclosure Melun → Perpignan |
 | Latitudes, stars | 0.01″ | series spread < 1″ | a few arcseconds; one latitude adjusted by 1.62″ |
