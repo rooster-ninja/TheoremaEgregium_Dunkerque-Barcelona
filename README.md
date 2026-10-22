@@ -10,6 +10,7 @@ Hosted on GitHub Pages from `index.html`. It links directly to the spreadsheets 
 
 | Result | Value | Uncertainty |
 | --- | --- | --- |
+| Rulers laid: four 2-toise (3.898 m) platinum bars, end to end | 3 021 at Melun, 2 987 at Perpignan | gaps read to 1/100 000 toise |
 | Melun base, measured on the ground | 6 075.8973 toises = 11 842.146 m | ≈ 1 pouce (2.7 cm), per Delambre |
 | Perpignan base: measured − carried through 115 triangles from Melun | 0.1485 toise = 28.9 cm | 25 ppm over ≈ 900 km |
 | Radius from spherical excess of observed angles (91 triangles) | **5 360 km** | 1σ 5 160–5 590 km; 0.66″/triangle systematic bias |
@@ -24,6 +25,7 @@ From the triangles alone the survey shows the strip is, on average, positively c
 | Folder | What's in it |
 | --- | --- |
 | `index.html` | The report, including a 3D view of each triangle's curvature (three.js) |
+| `images/` | Tome II Planche I, the platinum ruler on its supports |
 | `supplemental/` | `Melun_base_reduction.xlsx` (the base reduction, every step a formula) and `Triangle_chain_Dunkerque_Barcelona.xlsx` (115-triangle chain, Perpignan check, curvature fit, source discrepancies) |
 | `sources/` | Page extracts from the scanned volumes. `*_annotated.pdf` carry the checks as PDF notes: yellow = a step, green = verified, red = misprint or open question |
 | `data/` | Transcriptions as CSV: the Tableau complet, the Tome I observed angle sums, and the list of discrepancies found in the printed source |

@@ -52,6 +52,7 @@ svg text{font-family:var(--sans)}
 #sources{margin-top:16px}
 #sources ol{padding-left:22px;font-size:15px} #sources li{margin-bottom:8px}
 a{color:var(--accent)}
+.steps{margin:4px 0 12px;padding-left:22px}.steps li{margin-bottom:4px}
 .ctl{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;font:13px var(--mono);margin:6px 0 10px}
 .ctl input[type=range]{vertical-align:middle;accent-color:var(--accent)}
 .ctl button{font:13px var(--mono);background:var(--card);border:1px solid var(--ink-2);border-radius:6px;padding:5px 10px;cursor:pointer}
@@ -88,12 +89,47 @@ a{color:var(--accent)}
 <p>For a triangle of shortest lines on a sphere, the angles exceed 180° by the area over \(R^2\) (Art. 20):</p>
 $$A+B+C-\pi=\iint k\,d\sigma=\frac{\text{Area}}{R^{2}}$$
 <p>Area comes from the measured distances. The excess comes from the observed angles. Solve for \(R\).</p>
+<p class="note">Tome II’s spherical angles were not used for curvature. They are the observed angles adjusted to close on Delambre’s assumed sphere, and from triangle 44 to 100 he also nudged them by 0.01–0.1″ so the two bases agree (Tome II pp. 704–705). Their excess only returns the radius he assumed.</p>
 <div class="more" hidden>A typical survey triangle is about 280 km². On a 6 371 km Earth its angles add up to 180° + 1.45″. The whole curvature signal is that 1.45″.</div>
+</section>
+
+<section class="card wide">
+<button class="explain" aria-expanded="false">EXPLAIN</button>
+<h2>3 · The rulers, and how they were laid</h2>
+<p>The whole survey’s length rests on four bars made for Borda: platinum, <strong>2 toises long (3.898 m)</strong>, “environ six lignes de largeur et près d’une ligne d’épaisseur” (about 13.5 × 2.3 mm). They were laid end to end, 3 021 times at Melun and 2 987 times at Perpignan (Tome II pp. 2–24, 41, 55).</p>
+<figure style="margin:10px 0 12px"><img src="images/TII_Planche_I_platinum_ruler.jpg" alt="Tome II, Planche I: a platinum ruler on its wooden beam, roof, iron tripods and spiked wooden soles" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--rule)"><figcaption class="note">Tome II, Planche I. Fig. 1: one ruler as set on the ground, on its wooden beam under a roof (t), carried by two iron tripods (T) on spiked soles (S); the scale bar is 1 metre, marked in decimetres. Figs. 2–4: the beam, and the ruler edge-on and from above. <a href="sources/Source_TII_Planches_I-III_rulers_and_level.pdf">Plates I–III (PDF)</a></figcaption></figure>
+<div class="tbl"><table>
+<thead><tr><th>Part</th><th>What it is and what it measured</th></tr></thead>
+<tbody>
+<tr><td>Platinum bar</td><td>2 toises = 12 pieds = 3.898 m. Four of them, numbered I–IV, each beam painted a different colour. Bar I, the “module”, later became the reference for the prototype metre; the base lengths are in toises of half of it.</td></tr>
+<tr><td>Copper bar on top</td><td>About 6 pouces (16 cm) shorter, screwed to the platinum at one end only. Copper expands more than platinum, so its sliding free end, read on a vernier through a microscope, is a <em>metallic thermometer</em> for the bar itself.</td></tr>
+<tr><td>Languette</td><td>A small platinum tongue slid out of the front end to touch the next bar. Divided in 1/10 000 toise, with a vernier to 1/100 000 toise (19.5 µm); Delambre estimated to millionths, “sur lesquels il ne faut pourtant compter qu’à deux ou trois près”.</td></tr>
+<tr><td>Supports</td><td>Each bar on a straight wooden beam under a small roof against the sun, on two iron tripods with three levelling screws, 2½ pieds from the ends, standing on wooden soles spiked into the ground.</td></tr>
+<tr><td>Level</td><td>A wooden square with a 10° arc in 5′ parts and a vernier to 1′. Set on the bar, read, turned end for end and read again; half the difference is the slope.</td></tr>
+</tbody></table></div>
+<p><strong>The routine, every placement:</strong></p>
+<ol class="steps">
+<li>Line out the base first: an iron bar driven every 100 toises under the cross-hair of the circle, then replaced by a flush wooden stake.</li>
+<li>Set bars I–IV end to end on their tripods, aligned by two iron points on each roof against a sighting board 100 toises ahead, leaving a small gap between bars.</li>
+<li>Read each bar’s slope with the level, both ways. Every reading went into two registers, checked against each other on the spot.</li>
+<li>Lying on the ground, read the metallic thermometer, then push the languette out to touch the next bar and read the gap.</li>
+<li>Carry the rearmost bar to the front, onto supports already placed, and repeat. A bar is never touched once its slope has been taken.</li>
+<li>At the end of the day, drop a plumb line from the last bar onto a lead plate nailed to a buried stake, scribe a cross and cover it; next morning bar I starts exactly over that point.</li>
+</ol>
+<div class="tbl"><table>
+<thead><tr><th>Base</th><th>Dates</th><th class="n">Bars laid</th><th class="n">Bars × 2 t</th><th class="n">Arc of the base</th></tr></thead>
+<tbody>
+<tr><td>Melun–Lieusaint</td><td>5 floréal – 15 prairial an VI (24 Apr – 3 Jun 1798), “sans un seul jour d’interruption”</td><td class="n">3 021</td><td class="n">6 042 t = 11 776.1 m</td><td class="n">6 075.90 t = 11 842.15 m</td></tr>
+<tr><td>Perpignan (Vernet–Salces)</td><td>Aligned 12–18 thermidor; measured 19 thermidor – 1st jour complémentaire an VI (6 Aug – 17 Sep 1798)</td><td class="n">2 987</td><td class="n">5 974 t = 11 643.5 m</td><td class="n">6 006.26 t = 11 706.41 m</td></tr>
+<tr class="total"><td>Both</td><td></td><td class="n">6 008</td><td class="n">23.42 km</td><td class="n">23.55 km</td></tr>
+</tbody></table></div>
+<p class="note">The rest of each base is mostly the sum of thousands of small languette gaps (34.26 t, 66.8 m, at Melun). A day was 48 to 68 bars, 96–136 toises. Four labourers moved supports and bars; Tranchot aligned each bar and kept one register, Bellet levelled it, Leblanc de Pommard kept the second register. At Perpignan a gale on 7 fructidor shifted the bars on their tripods; that stretch was remeasured on the 11th, the two agreeing to 0.0044 toise (9 mm) over 136 toises.</p>
+<div class="more" hidden>Platinum expands little and does not rust. The copper–platinum pair turns the bar’s own expansion into a reading, so temperature is measured in the bar, not in the air. Bars × 2 toises is shorter than the base because of the gaps; the corrections are in card 4. Metric values use 1 toise = 1.949036 m (the 1799 legal metre, 443.295936 lignes).</div>
 </section>
 
 <section class="card">
 <button class="explain" aria-expanded="false">EXPLAIN</button>
-<h2>3 · The length: Melun base</h2>
+<h2>4 · The length: Melun base</h2>
 <p>3 021 placements of Borda's 2-toise platinum rulers (Tome II pp. 41–44), every correction recomputed:</p>
 <div class="tbl"><table>
 <thead><tr><th>Step</th><th class="n">Correction (t)</th><th class="n">Total (t)</th></tr></thead>
@@ -110,7 +146,7 @@ $$A+B+C-\pi=\iint k\,d\sigma=\frac{\text{Area}}{R^{2}}$$
 
 <section class="card">
 <button class="explain" aria-expanded="false">EXPLAIN</button>
-<h2>4 · The chain, and its check</h2>
+<h2>5 · The chain, and its check</h2>
 <p>115 triangles carry Melun's length to a second measured base at Perpignan. With the observed angles of Tome I:</p>
 <div class="tbl"><table>
 <thead><tr><th>Perpignan base</th><th class="n">Toises</th><th class="n">Metres</th></tr></thead>
@@ -125,7 +161,7 @@ $$A+B+C-\pi=\iint k\,d\sigma=\frac{\text{Area}}{R^{2}}$$
 
 <section class="card wide key">
 <button class="explain" aria-expanded="false">EXPLAIN</button>
-<h2>5 · The curvature, from angles alone</h2>
+<h2>6 · The curvature, from angles alone</h2>
 <p class="big">R = 5 360 km <small>1σ 5 160 – 5 590 km · 91 triangles · 25 900 km² · worked out here</small></p>
 <svg viewBox="0 0 900 300" role="img" aria-label="Radius from angle excess: 5 360 km, below the modern 6 371 km" style="width:100%;height:auto;display:block;margin:6px 0 4px">
   <g fill="#4a4740" font-size="13">
@@ -162,7 +198,7 @@ $$A+B+C-\pi=\iint k\,d\sigma=\frac{\text{Area}}{R^{2}}$$
 
 <section class="card wide">
 <button class="explain" aria-expanded="false">EXPLAIN</button>
-<h2>6 · k, the measure of curvature</h2>
+<h2>7 · k, the measure of curvature</h2>
 <p class="big">k = 3.48 × 10⁻⁸ km⁻² <small>1σ 3.19 – 3.76 × 10⁻⁸ · modern 1/6 371² = 2.46 × 10⁻⁸ · worked out here</small></p>
 <p>Gauss's measure of curvature is what the triangles actually give; R is only \(1/\sqrt{k}\). For one triangle, \(k_i=\varepsilon_i/\text{Area}_i\). For all 91 together, least squares on \(\varepsilon_i = k\,\text{Area}_i\):</p>
 $$k=\frac{\sum_i \text{Area}_i\,\varepsilon_i}{\sum_i \text{Area}_i^{2}},\qquad \sigma_k=\frac{s}{\sqrt{\sum_i \text{Area}_i^{2}}},\qquad R=\frac{1}{\sqrt{k}}$$
@@ -183,7 +219,7 @@ $$k=\frac{\sum_i \text{Area}_i\,\varepsilon_i}{\sum_i \text{Area}_i^{2}},\qquad 
 
 <section class="card wide key">
 <button class="explain" aria-expanded="false">EXPLAIN</button>
-<h2>7 · The chain in 3D: each triangle's own curvature</h2>
+<h2>8 · The chain in 3D: each triangle's own curvature</h2>
 <p>Each triangle is drawn as its own cap, bent by the k its observed angles give. Grey triangles had a concluded angle and give no k. Drag to turn, scroll to zoom, hover a triangle for its numbers.</p>
 <div class="ctl">
 <label>Height ×<input type="range" id="ex" min="50" max="2000" step="50" value="200"> <span id="exv">200</span></label>
@@ -198,7 +234,7 @@ $$k=\frac{\sum_i \text{Area}_i\,\varepsilon_i}{\sum_i \text{Area}_i^{2}},\qquad 
 
 <section class="card wide key">
 <button class="explain" aria-expanded="false">EXPLAIN</button>
-<h2>8 · Limits: what the theorem can and cannot show here</h2>
+<h2>9 · Limits: what the theorem can and cannot show here</h2>
 <p>The Theorema Egregium gives local curvature k, nothing more. Read honestly, this survey's k is a weak indication of a sphere, for five reasons:</p>
 <div class="tbl"><table>
 <thead><tr><th>Limit</th><th>In this data</th></tr></thead>
@@ -215,7 +251,7 @@ $$k=\frac{\sum_i \text{Area}_i\,\varepsilon_i}{\sum_i \text{Area}_i^{2}},\qquad 
 
 <section class="card wide">
 <button class="explain" aria-expanded="false">EXPLAIN</button>
-<h2>9 · Bias in the record: corrections toward an expected figure</h2>
+<h2>10 · Bias in the record: corrections toward an expected figure</h2>
 <p>The survey was not a test of the Earth's shape. Its goal was a metre fixed in advance as a ten-millionth of the quadrant, on an Earth already assumed to be an ellipsoid. Several corrections in the volumes move the data toward that expectation, and the volumes say so themselves:</p>
 <div class="tbl"><table>
 <thead><tr><th>Correction</th><th>What was done</th><th>Source</th></tr></thead>
@@ -232,7 +268,7 @@ $$k=\frac{\sum_i \text{Area}_i\,\varepsilon_i}{\sum_i \text{Area}_i^{2}},\qquad 
 
 <section class="card wide">
 <button class="explain" aria-expanded="false">EXPLAIN</button>
-<h2>10 · Errors, and the error bars they set</h2>
+<h2>11 · Errors, and the error bars they set</h2>
 <p>R scales as √(area / excess). A part per million in the sides moves R by a part per million; a fraction of an arcsecond in the angles moves it by percent.</p>
 <div class="tbl"><table>
 <thead><tr><th>Error</th><th class="n">Size</th><th>On distances</th><th>On R</th></tr></thead>
@@ -250,7 +286,7 @@ $$k=\frac{\sum_i \text{Area}_i\,\varepsilon_i}{\sum_i \text{Area}_i^{2}},\qquad 
 </section>
 
 <section class="card wide">
-<h2>11 · Conclusion</h2>
+<h2>12 · Conclusion</h2>
 <p>Measured entirely from inside the surface, as the Theorema Egregium allows, the survey shows the ground is curved, but only on average and with a large deviation in the radius: R = 5 360 km (1σ 5 160–5 590 km), 1 010 km (16%) short of 6 371 km, with regions spread from 4 930 to 5 880 km. The theorem cannot show constant curvature, a closed sphere, or the flattening. The limit is the angles, not the distances.</p>
 <p>The survey's reference frame comes from the stars as well. How many degrees each stretch spans, and so the flattening, rests on star latitudes at Dunkerque, Paris, Évaux, Carcassonne and Montjuïc; the chain's orientation rests on star azimuths; Clairaut's argument rests on the sidereal day. Even then the sections scatter, and Delambre had to add the Peru arc to adopt 1/334.</p>
 <p>Modern geodesy leans on the sky even more. Chains of triangles like this one are no longer how national networks or the Earth's figure are measured; they were replaced by satellite methods (GNSS, satellite laser ranging, DORIS) and by VLBI. The International Terrestrial Reference Frame is built from those four techniques, and it is oriented against the International Celestial Reference Frame, the positions of distant quasars observed by VLBI (<a href="https://dgfi.tum.de/research/reference-systems/determination-of-reference-frames/consistent-realization-of-terrestrial-and-celestial-reference-system">DGFI-TUM</a>). Ground instruments still do local work, such as levelling and gravimetry, but a purely surface measurement of the Earth's shape, the kind the Theorema Egregium allows, is no longer part of how the figure is determined.</p>
@@ -266,6 +302,7 @@ $$k=\frac{\sum_i \text{Area}_i\,\varepsilon_i}{\sum_i \text{Area}_i^{2}},\qquad 
 <p>Delambre &amp; Méchain, <em>Base du système métrique décimal</em>, 4 vols, Paris 1806–1821. ETH-Bibliothek Zürich, Rar 10260, <a href="https://doi.org/10.3931/e-rara-11803">doi:10.3931/e-rara-11803</a>. Page extracts are in <a href="https://github.com/rooster-ninja/TheoremaEgregium_Dunkerque-Barcelona/tree/main/sources">sources/</a>; annotated copies carry the checks as PDF notes.</p>
 <ol>
 <li>Tome I pp. 513–542, <em>Tableau des triangles</em>, column "Angles observés": the observed angle sums. <a href="sources/Source_TI_p513-542_Tableau_des_triangles_observed_angles.pdf">PDF</a></li>
+<li>Tome II pp. 1–24, the rulers and the order of measurement: “Elles sont de platine, ont deux toises de longueur, environ six lignes de largeur et près d’une ligne d’épaisseur”. <a href="sources/Source_TII_p1-24_rulers_and_procedure.pdf">PDF</a>; Planches I–III <a href="sources/Source_TII_Planches_I-III_rulers_and_level.pdf">PDF</a></li>
 <li>Tome II pp. 16–17, reduction of the broken line to the straight line. <a href="sources/Source_TII_p16-17_broken-line_formula.pdf">PDF</a></li>
 <li>Tome II pp. 31–58, <em>Mesure des bases</em>, Melun and Perpignan. <a href="sources/Source_TII_p31-58_Mesure_des_bases.pdf">PDF</a>; p. 39 page totals <a href="sources/Source_TII_p39_page_totals_No_II.pdf">PDF</a></li>
 <li>Tome II pp. 41–44, the Melun reduction: "Arc de la base … 6075.89730"; "L'incertitude … ne monte donc guère qu'à un pouce" (p. 31). <a href="sources/Source_TII_p41-44_reduction_chain_annotated.pdf">annotated PDF</a></li>
