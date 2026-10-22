@@ -20,6 +20,18 @@ Hosted on GitHub Pages from `index.html`. It links directly to the spreadsheets 
 
 From the triangles alone the survey shows the strip is, on average, positively curved, but with a large deviation in the radius: 1 010 km (16%) short of 6 371 km, and a 950 km spread between regions. The theorem cannot show constant curvature, a closed sphere or the flattening (35× below its resolution here); those need the astronomical reference. Modern geodesy relies on the sky even more: the reference frame comes from satellites (GNSS, SLR, DORIS) and VLBI, oriented to distant quasars, and triangulation chains like this one are no longer used to determine the figure. The volumes also record corrections made toward the expected figure (angles adjusted, series chosen, a latitude changed), so their own results are not an independent test. All results are fallible, inductive measurements, good to the sigma stated.
 
+## Methods: claimed accuracy against what they could deliver
+
+| Method | Printed to | Accuracy claimed | What the record's own checks show |
+| --- | --- | --- | --- |
+| Base lines, platinum rulers | 10⁻⁶ toise | 1 pouce in 11.8 km (2.3 ppm) | plausible; windy-day remeasure 33 ppm over 265 m |
+| Angles, repeating circle | 0.01″ | "le résultat le plus probable" | ≈ 1″ per angle; +0.66″ systematic per triangle |
+| Chain of 115 triangles | 0.2 mm on 20 km | bases "plus certaines encore que nos angles" | 25 ppm misclosure Melun → Perpignan |
+| Latitudes, stars | 0.01″ | series spread < 1″ | a few arcseconds; one latitude adjusted by 1.62″ |
+| The metre | 10⁻⁶ ligne | exact by law | ≈ 0.2 mm (200 ppm) short of its definition |
+
+The distances are the strong part; everything resting on sub-arcsecond angles or arcsecond latitudes (curvature, flattening, the metre) is less certain than its digits, and those are where the volumes record adjustments.
+
 ## Contents
 
 | Folder | What's in it |
