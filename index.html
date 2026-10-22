@@ -52,6 +52,15 @@ svg text{font-family:var(--sans)}
 #sources{margin-top:16px}
 #sources ol{padding-left:22px;font-size:15px} #sources li{margin-bottom:8px}
 a{color:var(--accent)}
+.ctl{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;font:13px var(--mono);margin:6px 0 10px}
+.ctl input[type=range]{vertical-align:middle;accent-color:var(--accent)}
+.ctl button{font:13px var(--mono);background:var(--card);border:1px solid var(--ink-2);border-radius:6px;padding:5px 10px;cursor:pointer}
+#view3d{position:relative;height:min(560px,70vh);background:#1b1a17;border-radius:12px;overflow:hidden;touch-action:none}
+#view3d canvas{display:block;width:100%;height:100%;cursor:grab}
+#tip{position:absolute;pointer-events:none;background:rgba(250,247,240,.96);color:var(--ink);font:13px/1.4 var(--mono);padding:8px 10px;border-radius:6px;max-width:300px;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.legend{position:absolute;left:12px;bottom:6px;margin:0;color:#e8e2d4;font:12px var(--mono);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sw{display:inline-block;width:12px;height:12px;border-radius:2px;margin-left:6px}
+.sw.neg{background:#c0574b}.sw.lo{background:#3b86a8}.sw.hi{background:#e0a23c}.sw.na{background:#8a857a}
 @media (max-width:820px){.grid{grid-template-columns:minmax(0,1fr)}}
 @media (prefers-reduced-motion:no-preference){.more{animation:fade .18s ease-out}@keyframes fade{from{opacity:.4}to{opacity:1}}}
 </style>
@@ -153,7 +162,77 @@ $$A+B+C-\pi=\iint k\,d\sigma=\frac{\text{Area}}{R^{2}}$$
 
 <section class="card wide">
 <button class="explain" aria-expanded="false">EXPLAIN</button>
-<h2>6 · Errors, and the error bars they set</h2>
+<h2>6 · k, the measure of curvature</h2>
+<p class="big">k = 3.48 × 10⁻⁸ km⁻² <small>1σ 3.19 – 3.76 × 10⁻⁸ · modern 1/6 371² = 2.46 × 10⁻⁸ · worked out here</small></p>
+<p>Gauss's measure of curvature is what the triangles actually give; R is only \(1/\sqrt{k}\). For one triangle, \(k_i=\varepsilon_i/\text{Area}_i\). For all 91 together, least squares on \(\varepsilon_i = k\,\text{Area}_i\):</p>
+$$k=\frac{\sum_i \text{Area}_i\,\varepsilon_i}{\sum_i \text{Area}_i^{2}},\qquad \sigma_k=\frac{s}{\sqrt{\sum_i \text{Area}_i^{2}}},\qquad R=\frac{1}{\sqrt{k}}$$
+<p>with \(\varepsilon\) in radians (1″ = 4.848 × 10⁻⁶ rad) and \(s\) = 1.80″, the r.m.s. scatter of the closures about the fit.</p>
+<div class="tbl"><table>
+<thead><tr><th>Worked example: triangle 12, Fiefs–Sauti–Bonnières</th><th class="n">Value</th></tr></thead>
+<tbody>
+<tr><td>Observed angles 34° 32′ 52.13″ + 54° 45′ 9.38″ + 90° 42′ 2.11″ (Tome I p. 515)</td><td class="n">180° 0′ 3.62″</td></tr>
+<tr><td>Excess \(\varepsilon\)</td><td class="n">3.62″ = 1.755 × 10⁻⁵ rad</td></tr>
+<tr><td>Area, from the chain sides (½·b·c·sin A)</td><td class="n">288.5 km²</td></tr>
+<tr><td>\(k_{12}=\varepsilon/\text{Area}\)</td><td class="n">6.08 × 10⁻⁸ km⁻²</td></tr>
+<tr><td>\(R_{12}=1/\sqrt{k_{12}}\)</td><td class="n">4 055 km</td></tr>
+<tr class="total"><td>Expected on a 6 371 km Earth</td><td class="n">1.47″, k = 2.46 × 10⁻⁸</td></tr>
+</tbody></table></div>
+<p>One triangle tells little: 2.15″ of triangle 12's 3.62″ is error. Single-triangle values run from −1.6 to +3.7 × 10⁻⁷ km⁻², and 11 of the 91 come out negative (angles summing to less than 180°). Only the fit over all of them is meaningful. With a constant bias fitted as well, k = 3.09 × 10⁻⁸ (1σ 2.50–3.68 × 10⁻⁸), which includes the modern value.</p>
+<div class="more" hidden>The units: excess in radians is dimensionless, so k has units of 1/area. 2.46 × 10⁻⁸ km⁻² is about one radian of excess per 41 million km², the area of a twelfth of the globe.</div>
+</section>
+
+<section class="card wide key">
+<button class="explain" aria-expanded="false">EXPLAIN</button>
+<h2>7 · The chain in 3D: each triangle's own curvature</h2>
+<p>Each triangle is drawn as its own cap, bent by the k its observed angles give. Grey triangles had a concluded angle and give no k. Drag to turn, scroll to zoom, hover a triangle for its numbers.</p>
+<div class="ctl">
+<label>Height ×<input type="range" id="ex" min="50" max="2000" step="50" value="200"> <span id="exv">200</span></label>
+<label><input type="radio" name="mode" value="meas" checked> measured k</label>
+<label><input type="radio" name="mode" value="ref"> a 6 371 km Earth</label>
+<button id="reset" type="button">Reset view</button>
+</div>
+<div id="view3d"><div id="tip" hidden></div><p class="legend"><span class="sw neg"></span>k &lt; 0 <span class="sw lo"></span>near 6 371 km <span class="sw hi"></span>k ≥ 3× modern <span class="sw na"></span>no k</p></div>
+<p class="note">Layout: the chain laid flat from its own side lengths (worked out here), Dunkerque at left, Montjuïc at right, 1 075 km. Cap height = √|k|·r²/2 from each triangle's centroid, times the slider; at true scale a 6 371 km Earth bends a typical triangle by about 18 m, far too little to see. Negative k is drawn as a dish.</p>
+<div class="more" hidden>The measured caps are rough because each single k carries about ±1.8″ of angle noise on a signal of about 1.5″. Switch to "a 6 371 km Earth" to see the smooth version every triangle would show with perfect angles.</div>
+</section>
+
+<section class="card wide key">
+<button class="explain" aria-expanded="false">EXPLAIN</button>
+<h2>8 · Limits: what the theorem can and cannot show here</h2>
+<p>The Theorema Egregium gives local curvature k, nothing more. Read honestly, this survey's k is a weak indication of a sphere, for five reasons:</p>
+<div class="tbl"><table>
+<thead><tr><th>Limit</th><th>In this data</th></tr></thead>
+<tbody>
+<tr><td><strong>The radius deviates widely.</strong> The derived R is far from the accepted value, and the regions disagree with each other.</td><td>5 360 km against 6 371 km: 1 010 km (16%) short, 4.6σ on the random error alone. North 5 880 km, centre 5 550 km, south 4 930 km: a 950 km (19%) spread. Single triangles give R from about 1 600 km to infinity, and 11 of 91 give negative k.</td></tr>
+<tr><td><strong>Signal below noise.</strong> One triangle's excess is smaller than its own angle error.</td><td>Expected excess ≈ 1.45″ per triangle; closure scatter 1.80″ r.m.s.; systematic offset 0.66″. Only the average over 91 triangles shows curvature.</td></tr>
+<tr><td><strong>Constant k is not shown.</strong> A sphere needs the same k everywhere; this data cannot confirm that.</td><td>The regional differences are 1.3–1.4σ: neither proven nor ruled out. The spread is as consistent with uneven curvature, or uneven error, as with one radius.</td></tr>
+<tr><td><strong>k &gt; 0 is not unique to a sphere.</strong> Any positively curved surface gives positive excess.</td><td>An ellipsoid, an egg, or a bulge on an otherwise different surface all fit. A 1 075 × 60 km strip along one meridian says nothing about the surface beyond the strip, or whether it closes on itself.</td></tr>
+<tr><td><strong>Oblateness is out of reach.</strong> On an oblate Earth k changes along the arc, but far too little.</td><td>On today's ellipsoid k differs by 0.23% between 41° and 51° latitude; the measurement's 1σ is about 8%. The theorem here is about 35 times too coarse to see the flattening.</td></tr>
+</tbody></table></div>
+<p>So the strongest claim the theorem supports is that this strip of France and Catalonia is, on average, positively curved by roughly Earth's amount, with a large and unexplained deviation in the radius. That it is a sphere, or an oblate spheroid, needs more than the triangles.</p>
+<div class="more" hidden>The 4.6σ figure counts only random error. Fitting a constant bias per triangle brings 6 371 km inside 1σ, but that is a model choice: it assumes the extra excess is error rather than curvature, which the angles alone cannot decide.</div>
+</section>
+
+<section class="card wide">
+<button class="explain" aria-expanded="false">EXPLAIN</button>
+<h2>9 · Bias in the record: corrections toward an expected figure</h2>
+<p>The survey was not a test of the Earth's shape. Its goal was a metre fixed in advance as a ten-millionth of the quadrant, on an Earth already assumed to be an ellipsoid. Several corrections in the volumes move the data toward that expectation, and the volumes say so themselves:</p>
+<div class="tbl"><table>
+<thead><tr><th>Correction</th><th>What was done</th><th>Source</th></tr></thead>
+<tbody>
+<tr><td>Spherical angles</td><td>The Tome II angles are the observed ones forced to close on an assumed sphere (mean degree 57 020 toises). Their excess returns the assumption, not a measurement.</td><td>Tome II pp. 702, 706</td></tr>
+<tr><td>Angles adjusted to make the bases agree</td><td>The 29 cm Melun–Perpignan misclosure was removed by changing the angles of triangles 44–100 by 0.01–0.1″, "agissant toujours dans le même sens".</td><td>Tome II pp. 704–705</td></tr>
+<tr><td>Choice among observation series</td><td>"J'avois cru pouvoir choisir parmi les différentes séries celles qui donnoient des angles moindres" (triangle 20); "en se permettant un choix entre les séries, on feroit évanouir l'erreur" (triangle 26). The commission's angles are "le résultat le plus probable", not every reading.</td><td>Tome I pp. 518, 520</td></tr>
+<tr><td>A latitude changed to fit the expected trend</td><td>From Montjuïc to Formentera "le degré augmente au lieu de diminuer", so Delambre adds 1.62″ to Montjuïc's latitude to restore the southward decrease an oblate Earth predicts.</td><td>Tome III p. 548</td></tr>
+<tr><td>Pendulum formula built on a theoretical flattening</td><td>Biot's formula for gravity with latitude assumes Laplace's 1/307, fits only the Unst value, then compares the other stations against it.</td><td>Tome IV p. 575</td></tr>
+</tbody></table></div>
+<p>So the volumes' own results lean toward the figure they set out to find, and they cannot count as an independent test of it. For this report the effect is limited: the curvature fit uses the Tome I observed angles, before the sphere closure and the base adjustment. Those are still the commission's chosen means, so some selection is already inside them. It did not pull them toward the expected answer: they close 0.66″ wider than a 6 371 km Earth predicts.</p>
+<div class="more" hidden>A cleaner test would start from the individual repetition series in the station registers (Tome I pp. 11–510), before the commission chose among them. Méchain's private handling of his Barcelona latitudes, a discrepancy not published in his lifetime, is a well-documented part of the survey's history (Ken Alder, <em>The Measure of All Things</em>, 2002).</div>
+</section>
+
+<section class="card wide">
+<button class="explain" aria-expanded="false">EXPLAIN</button>
+<h2>10 · Errors, and the error bars they set</h2>
 <p>R scales as √(area / excess). A part per million in the sides moves R by a part per million; a fraction of an arcsecond in the angles moves it by percent.</p>
 <div class="tbl"><table>
 <thead><tr><th>Error</th><th class="n">Size</th><th>On distances</th><th>On R</th></tr></thead>
@@ -166,14 +245,15 @@ $$A+B+C-\pi=\iint k\,d\sigma=\frac{\text{Area}}{R^{2}}$$
 <tr><td>Log sines not matching printed angles (triangles 52–54)</td><td class="n">to 5.5″</td><td>1.6 cm at Perpignan</td><td class="good">none</td></tr>
 <tr><td>Misprints in toise and metre columns (≈ 30)</td><td class="n">1 mm – 1 m</td><td>none: logs are authoritative</td><td class="good">none</td></tr>
 </tbody></table></div>
-<p class="note">Worst misprints: triangle 112 arcs printed shorter than their own chords (0.40 and 0.30 t); Violan–Montsalvy 1 m off (triangle 87); the Melun base's metres printed 11 832.41 for 11 842.15. Every one is listed in <code>data/source_discrepancies.csv</code> and marked in red on the annotated pages.</p>
+<p class="note">Worst misprints: triangle 112 arcs printed shorter than their own chords (0.40 and 0.30 t); Violan–Montsalvy 1 m off (triangle 87); the Melun base's metres printed 11 832.41 for 11 842.15. Every one is listed in <a href="data/source_discrepancies.csv">data/source_discrepancies.csv</a> and marked in red on the annotated pages.</p>
 <div class="more" hidden>The transcription was checked five ways per row: log sine against its angle, sine rule inside the triangle, base carried from the earlier triangle, arc against its logarithm, angle sum against excess. About 40 misreads were caught that way; each remaining flag was confirmed on the scan.</div>
 </section>
 
 <section class="card wide">
-<h2>7 · Conclusion</h2>
-<p>Measured entirely from inside the surface, as the Theorema Egregium allows, the survey shows the ground is curved, with R = 5 360 km (1σ 5 160–5 590 km): the right size, 16% low, good to about ±10–15% once systematic error is admitted. The limit is the angles, not the distances.</p>
+<h2>11 · Conclusion</h2>
+<p>Measured entirely from inside the surface, as the Theorema Egregium allows, the survey shows the ground is curved, but only on average and with a large deviation in the radius: R = 5 360 km (1σ 5 160–5 590 km), 1 010 km (16%) short of 6 371 km, with regions spread from 4 930 to 5 880 km. The theorem cannot show constant curvature, a closed sphere, or the flattening. The limit is the angles, not the distances.</p>
 <p>The survey's reference frame comes from the stars as well. How many degrees each stretch spans, and so the flattening, rests on star latitudes at Dunkerque, Paris, Évaux, Carcassonne and Montjuïc; the chain's orientation rests on star azimuths; Clairaut's argument rests on the sidereal day. Even then the sections scatter, and Delambre had to add the Peru arc to adopt 1/334.</p>
+<p>The record also carries its makers’ intent: angles, a latitude and a gravity formula were adjusted toward the figure the survey was built to deliver. It confirms that expectation more than it tests it.</p>
 <p>Each of these is a fallible, inductive measurement, good to a stated sigma. Together, the triangles give the lengths and the curvature, the stars give the latitudes and orientation, and the pendulum gives gravity. They point to an oblate spheroid; no one of them alone shows it.</p>
 </section>
 
@@ -182,7 +262,7 @@ $$A+B+C-\pi=\iint k\,d\sigma=\frac{\text{Area}}{R^{2}}$$
 <div class="foot"><button class="srcbtn" id="srcbtn" aria-expanded="false" aria-controls="sources">Sources for this page (pages and quotes)</button></div>
 <section class="card" id="sources" hidden>
 <h2>Sources: pages and quotes</h2>
-<p>Delambre &amp; Méchain, <em>Base du système métrique décimal</em>, 4 vols, Paris 1806–1821. ETH-Bibliothek Zürich, Rar 10260, <a href="https://doi.org/10.3931/e-rara-11803">doi:10.3931/e-rara-11803</a>. Page extracts are in <code>sources/</code>; annotated copies carry the checks as PDF notes.</p>
+<p>Delambre &amp; Méchain, <em>Base du système métrique décimal</em>, 4 vols, Paris 1806–1821. ETH-Bibliothek Zürich, Rar 10260, <a href="https://doi.org/10.3931/e-rara-11803">doi:10.3931/e-rara-11803</a>. Page extracts are in <a href="https://github.com/rooster-ninja/TheoremaEgregium_Dunkerque-Barcelona/tree/main/sources">sources/</a>; annotated copies carry the checks as PDF notes.</p>
 <ol>
 <li>Tome I pp. 513–542, <em>Tableau des triangles</em>, column "Angles observés": the observed angle sums. <a href="sources/Source_TI_p513-542_Tableau_des_triangles_observed_angles.pdf">PDF</a></li>
 <li>Tome II pp. 16–17, reduction of the broken line to the straight line. <a href="sources/Source_TII_p16-17_broken-line_formula.pdf">PDF</a></li>
@@ -190,8 +270,12 @@ $$A+B+C-\pi=\iint k\,d\sigma=\frac{\text{Area}}{R^{2}}$$
 <li>Tome II pp. 41–44, the Melun reduction: "Arc de la base … 6075.89730"; "L'incertitude … ne monte donc guère qu'à un pouce" (p. 31). <a href="sources/Source_TII_p41-44_reduction_chain_annotated.pdf">annotated PDF</a></li>
 <li>Tome II p. 703: "suivant la mesure, nous avons eu … 3.77860.30659 … La différence est 0.00001.07371 … 0ᵗ14849 … 10ᵖ 8ˡ3". pp. 704–705, the angle adjustments; p. 703: "Tous les calculs ont été faits sur les logarithmes". <a href="sources/Source_TII_p701-705_Calcul_des_triangles_annotated.pdf">annotated PDF</a></li>
 <li>Tome II pp. 800–844, <em>Tableau complet des triangles</em>: the 115 triangles. <a href="sources/Source_TII_p800-844_Tableau_complet_annotated.pdf">annotated PDF</a></li>
+<li>Tome I pp. 518, 520, footnotes (20) and (26): "choisir parmi les différentes séries celles qui donnoient des angles moindres"; "en se permettant un choix entre les séries, on feroit évanouir l'erreur". In the Tome I PDF above.</li>
+<li>Tome III p. 548: "De Montjouy à Formentera le degré augmente au lieu de diminuer … Ajoutons donc 1″62 à la latitude de Montjouy". <a href="sources/Source_TIII_p548_degrees_by_section.pdf">PDF</a></li>
+<li>Tome IV pp. 573–575: "M. Laplace a trouvé … un aplatissement égal à 0,00326 … J'ai emprunté ce résultat de la théorie". <a href="sources/Source_TIV_p573-576_seconds_pendulum.pdf">PDF</a></li>
+<li>Ken Alder, <em>The Measure of All Things</em> (Free Press, 2002), on Méchain's Barcelona latitudes.</li>
 <li>Gauss, <em>General Investigations of Curved Surfaces</em> (1827; trans. Morehead &amp; Hiltebeitel, 1902), Art. 12 and Art. 20.</li>
-<li>Supplementals: <a href="supplemental/Melun_base_reduction.xlsx">Melun_base_reduction.xlsx</a>, <a href="supplemental/Triangle_chain_Dunkerque_Barcelona.xlsx">Triangle_chain_Dunkerque_Barcelona.xlsx</a>. Data and scripts: <code>data/</code>, <code>scripts/</code>.</li>
+<li>Supplementals: <a href="supplemental/Melun_base_reduction.xlsx">Melun_base_reduction.xlsx</a>, <a href="supplemental/Triangle_chain_Dunkerque_Barcelona.xlsx">Triangle_chain_Dunkerque_Barcelona.xlsx</a>. Data and scripts: <a href="https://github.com/rooster-ninja/TheoremaEgregium_Dunkerque-Barcelona/tree/main/data">data/</a>, <a href="https://github.com/rooster-ninja/TheoremaEgregium_Dunkerque-Barcelona/tree/main/scripts">scripts/</a>.</li>
 </ol>
 </section>
 </div>
@@ -199,6 +283,72 @@ $$A+B+C-\pi=\iint k\,d\sigma=\frac{\text{Area}}{R^{2}}$$
 document.querySelectorAll('.explain').forEach(b=>b.addEventListener('click',()=>{const m=b.parentElement.querySelector('.more');const open=m.hidden;m.hidden=!open;b.setAttribute('aria-expanded',open);b.textContent=open?'CLOSE':'EXPLAIN';}));
 const sb=document.getElementById('srcbtn'),sp=document.getElementById('sources');
 sb.addEventListener('click',()=>{sp.hidden=!sp.hidden;sb.setAttribute('aria-expanded',!sp.hidden);if(!sp.hidden)sp.scrollIntoView({behavior:'smooth',block:'start'});});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+const TRI=[{"n":1,"st":["Dunkerque","Watten","Cassel"],"xy":[[0.0,-0.0],[-10.524,-23.211],[8.355,-26.157]],"area_km2":234.59,"excess":0.0,"k":0.0},{"n":2,"st":["Dunkerque","Watten","Gravelines"],"xy":[[0.0,-0.0],[-10.524,-23.211],[-17.247,-5.853]],"area_km2":169.37,"excess":null,"k":null},{"n":3,"st":["Watten","Cassel","Fiefs"],"xy":[[-10.524,-23.211],[8.355,-26.157],[-3.127,-59.393]],"area_km2":330.64,"excess":0.77,"k":1.129e-08},{"n":4,"st":["Watten","Cassel","Helfaut"],"xy":[[-10.524,-23.211],[8.355,-26.157],[-8.835,-38.086]],"area_km2":137.91,"excess":null,"k":null},{"n":5,"st":["Cassel","Fiefs","Helfaut"],"xy":[[8.355,-26.157],[-3.127,-59.393],[-8.835,-38.086]],"area_km2":217.18,"excess":null,"k":null},{"n":6,"st":["Cassel","Fiefs","Mesnil"],"xy":[[8.355,-26.157],[-3.127,-59.393],[16.03,-66.46]],"area_km2":358.94,"excess":0.72,"k":9.725e-09},{"n":7,"st":["Cassel","Béthune","Fiefs"],"xy":[[8.355,-26.157],[19.481,-55.688],[-3.127,-59.393]],"area_km2":354.45,"excess":null,"k":null},{"n":8,"st":["Béthune","Mesnil","Fiefs"],"xy":[[19.481,-55.688],[16.03,-66.46],[-3.127,-59.393]],"area_km2":115.38,"excess":null,"k":null},{"n":9,"st":["Cassel","Béthune","Helfaut"],"xy":[[8.355,-26.157],[19.481,-55.688],[-8.835,-38.086]],"area_km2":320.19,"excess":null,"k":null},{"n":10,"st":["Helfaut","Béthune","Fiefs"],"xy":[[-8.835,-38.086],[19.481,-55.688],[-3.127,-59.393]],"area_km2":251.44,"excess":null,"k":null},{"n":11,"st":["Fiefs","Mesnil","Sauti"],"xy":[[-3.127,-59.393],[16.03,-66.46],[12.763,-90.911]],"area_km2":245.76,"excess":0.0,"k":0.0},{"n":12,"st":["Fiefs","Sauti","Bonnières"],"xy":[[-3.127,-59.393],[12.763,-90.911],[-7.035,-87.955]],"area_km2":288.52,"excess":3.62,"k":6.083e-08},{"n":13,"st":["Bonnières","Sauti","Beauquêne"],"xy":[[-7.035,-87.955],[12.763,-90.911],[2.94,-105.542]],"area_km2":159.36,"excess":-1.32,"k":-4.016e-08},{"n":14,"st":["Sauti","Beauquêne","Mailli"],"xy":[[12.763,-90.911],[2.94,-105.542],[18.092,-106.319]],"area_km2":114.66,"excess":2.74,"k":1.159e-07},{"n":15,"st":["Mailli","Villersbretonneux","Beauquêne"],"xy":[[18.092,-106.319],[12.257,-129.646],[2.94,-105.542]],"area_km2":178.99,"excess":null,"k":null},{"n":16,"st":["Villersbretonneux","Vignacourt","Beauquêne"],"xy":[[12.257,-129.646],[-11.011,-114.079],[2.94,-105.542]],"area_km2":207.9,"excess":null,"k":null},{"n":17,"st":["Villersbretonneux","Vignacourt","Sourdon"],"xy":[[12.257,-129.646],[-11.011,-114.079],[4.093,-147.404]],"area_km2":270.13,"excess":1.34,"k":2.405e-08},{"n":18,"st":["Villersbretonneux","Sourdon","Arvillers"],"xy":[[12.257,-129.646],[4.093,-147.404],[21.966,-143.18]],"area_km2":141.45,"excess":0.9,"k":3.085e-08},{"n":19,"st":["Beauquêne","Mailli","Bayonvillers"],"xy":[[2.94,-105.542],[18.092,-106.319],[20.283,-130.331]],"area_km2":181.06,"excess":-1.44,"k":-3.856e-08},{"n":20,"st":["Mailli","Bayonvillers","Villersbretonneux"],"xy":[[18.092,-106.319],[20.283,-130.331],[12.257,-129.646]],"area_km2":95.61,"excess":5.18,"k":2.627e-07},{"n":21,"st":["Bayonvillers","Villersbretonneux","Arvillers"],"xy":[[20.283,-130.331],[12.257,-129.646],[21.966,-143.18]],"area_km2":50.98,"excess":3.92,"k":3.728e-07},{"n":22,"st":["Villersbretonneux","Sourdon","Amiens"],"xy":[[12.257,-129.646],[4.093,-147.404],[24.357,-139.682]],"area_km2":148.4,"excess":null,"k":null},{"n":23,"st":["Villersbretonneux","Vignacourt","Amiens"],"xy":[[12.257,-129.646],[-11.011,-114.079],[24.357,-139.682]],"area_km2":89.78,"excess":-3.0,"k":-1.62e-07},{"n":24,"st":["Arvillers","Sourdon","Coivrel"],"xy":[[21.966,-143.18],[4.093,-147.404],[15.724,-164.644]],"area_km2":178.63,"excess":-0.23,"k":-6.242e-09},{"n":25,"st":["Sourdon","Coivrel","Noyers"],"xy":[[4.093,-147.404],[15.724,-164.644],[-5.526,-165.083]],"area_km2":185.73,"excess":-1.0,"k":-2.61e-08},{"n":26,"st":["Coivrel","Noyers","Clermont"],"xy":[[15.724,-164.644],[-5.526,-165.083],[6.025,-184.134]],"area_km2":204.96,"excess":3.99,"k":9.438e-08},{"n":27,"st":["Coivrel","Clermont","Jonquières"],"xy":[[15.724,-164.644],[6.025,-184.134],[28.692,-182.15]],"area_km2":211.27,"excess":2.16,"k":4.957e-08},{"n":28,"st":["Clermont","Jonquières","Saint-Christophe"],"xy":[[6.025,-184.134],[28.692,-182.15],[19.354,-197.148]],"area_km2":160.71,"excess":1.4,"k":4.223e-08},{"n":29,"st":["Coivrel","Clermont","Saint-Christophe"],"xy":[[15.724,-164.644],[6.025,-184.134],[19.354,-197.148]],"area_km2":192.99,"excess":2.17,"k":5.451e-08},{"n":30,"st":["Clermont","Saint-Christophe","Saint-Martin"],"xy":[[6.025,-184.134],[19.354,-197.148],[1.265,-214.261]],"area_km2":231.75,"excess":4.88,"k":1.021e-07},{"n":31,"st":["Saint-Christophe","Saint-Martin","Dammartin"],"xy":[[19.354,-197.148],[1.265,-214.261],[25.894,-219.913]],"area_km2":261.86,"excess":2.57,"k":4.758e-08},{"n":32,"st":["Clermont","Dammartin","Saint-Martin"],"xy":[[6.025,-184.134],[25.894,-219.913],[1.265,-214.261]],"area_km2":384.43,"excess":3.04,"k":3.834e-08},{"n":33,"st":["Clermont","Jonquières","Dammartin"],"xy":[[6.025,-184.134],[28.692,-182.15],[25.894,-219.913]],"area_km2":425.2,"excess":2.42,"k":2.759e-08},{"n":34,"st":["Jonquières","Dammartin","Saint-Martin"],"xy":[[28.692,-182.15],[25.894,-219.913],[1.265,-214.261]],"area_km2":472.94,"excess":null,"k":null},{"n":35,"st":["Saint-Martin","Dammartin","Panthéon"],"xy":[[1.265,-214.261],[25.894,-219.913],[1.793,-243.525]],"area_km2":358.88,"excess":0.51,"k":6.89e-09},{"n":36,"st":["Dammartin","Panthéon","Bellassise"],"xy":[[25.894,-219.913],[1.793,-243.525],[32.433,-245.603]],"area_km2":386.79,"excess":2.84,"k":3.56e-08},{"n":37,"st":["Dammartin","Bellassise","Invalides"],"xy":[[25.894,-219.913],[32.433,-245.603],[60.079,-227.114]],"area_km2":415.57,"excess":null,"k":null},{"n":38,"st":["Panthéon","Bellassise","Brie"],"xy":[[1.793,-243.525],[32.433,-245.603],[21.392,-260.508]],"area_km2":239.81,"excess":1.36,"k":2.749e-08},{"n":39,"st":["Panthéon","Brie","Montlhéri"],"xy":[[1.793,-243.525],[21.392,-260.508],[-3.277,-267.098]],"area_km2":274.05,"excess":1.97,"k":3.485e-08},{"n":40,"st":["Brie","Montlhéri","Tour de Croy"],"xy":[[21.392,-260.508],[-3.277,-267.098],[5.763,-282.555]],"area_km2":220.44,"excess":null,"k":null},{"n":41,"st":["Brie","Montlhéri","Malvoisine"],"xy":[[21.392,-260.508],[-3.277,-267.098],[7.732,-280.384]],"area_km2":200.15,"excess":1.08,"k":2.616e-08},{"n":42,"st":["Montlhéri","Malvoisine","Lieursaint"],"xy":[[-3.277,-267.098],[7.732,-280.384],[-6.874,-287.647]],"area_km2":137.01,"excess":0.9,"k":3.185e-08},{"n":43,"st":["Malvoisine","Lieursaint","Melun"],"xy":[[7.732,-280.384],[-6.874,-287.647],[0.861,-296.614]],"area_km2":93.57,"excess":0.41,"k":2.124e-08},{"n":44,"st":["Montlhéri","Malvoisine","Torfou"],"xy":[[-3.277,-267.098],[7.732,-280.384],[-6.517,-278.763]],"area_km2":85.74,"excess":-2.8,"k":-1.583e-07},{"n":45,"st":["Malvoisine","Torfou","Bruyères"],"xy":[[7.732,-280.384],[-6.517,-278.763],[-10.428,-285.17]],"area_km2":48.81,"excess":null,"k":null},{"n":46,"st":["Montlhéri","Torfou","Saint-Yon"],"xy":[[-3.277,-267.098],[-6.517,-278.763],[-9.342,-275.713]],"area_km2":21.42,"excess":null,"k":null},{"n":47,"st":["Malvoisine","Torfou","Forêt"],"xy":[[7.732,-280.384],[-6.517,-278.763],[-5.978,-295.027]],"area_km2":115.43,"excess":-2.03,"k":-8.526e-08},{"n":48,"st":["Malvoisine","Forêt","Chapelle-la-Reine"],"xy":[[7.732,-280.384],[-5.978,-295.027],[19.211,-302.205]],"area_km2":233.63,"excess":1.89,"k":3.922e-08},{"n":49,"st":["Forêt","Chapelle-la-Reine","Pithiviers"],"xy":[[-5.978,-295.027],[19.211,-302.205],[-3.732,-318.378]],"area_km2":286.03,"excess":3.03,"k":5.136e-08},{"n":50,"st":["Chapelle-la-Reine","Pithiviers","Bromeille"],"xy":[[19.211,-302.205],[-3.732,-318.378],[14.125,-316.734]],"area_km2":125.54,"excess":null,"k":null},{"n":51,"st":["Forêt","Pithiviers","Méréville"],"xy":[[-5.978,-295.027],[-3.732,-318.378],[-15.375,-302.45]],"area_km2":118.05,"excess":null,"k":null},{"n":52,"st":["Chapelle-la-Reine","Pithiviers","Boiscommun"],"xy":[[19.211,-302.205],[-3.732,-318.378],[6.093,-333.355]],"area_km2":251.26,"excess":3.15,"k":6.078e-08},{"n":53,"st":["Pithiviers","Boiscommun","Châtillon"],"xy":[[-3.732,-318.378],[6.093,-333.355],[-3.388,-332.662]],"area_km2":67.59,"excess":-2.25,"k":-1.614e-07},{"n":54,"st":["Boiscommun","Châtillon","Châteauneuf"],"xy":[[6.093,-333.355],[-3.388,-332.662],[-5.936,-352.862]],"area_km2":96.64,"excess":-2.14,"k":-1.074e-07},{"n":55,"st":["Châtillon","Châteauneuf","Orléans"],"xy":[[-3.388,-332.662],[-5.936,-352.862],[-29.1,-348.943]],"area_km2":238.96,"excess":0.88,"k":1.785e-08},{"n":56,"st":["Châteauneuf","Orléans","Vouzon"],"xy":[[-5.936,-352.862],[-29.1,-348.943],[-17.711,-377.219]],"area_km2":305.18,"excess":1.97,"k":3.13e-08},{"n":57,"st":["Orléans","Vouzon","Chaumont"],"xy":[[-29.1,-348.943],[-17.711,-377.219],[-29.206,-381.309]],"area_km2":185.81,"excess":null,"k":null},{"n":58,"st":["Vouzon","Chaumont","Soême"],"xy":[[-17.711,-377.219],[-29.206,-381.309],[-8.318,-398.064]],"area_km2":139.01,"excess":4.91,"k":1.712e-07},{"n":59,"st":["Vouzon","Oison","Châteauneuf"],"xy":[[-17.711,-377.219],[18.235,-393.871],[-5.936,-352.862]],"area_km2":535.81,"excess":null,"k":null},{"n":60,"st":["Vouzon","Oison","Soême"],"xy":[[-17.711,-377.219],[18.235,-393.871],[-8.318,-398.064]],"area_km2":296.42,"excess":null,"k":null},{"n":61,"st":["Vouzon","Soême","Sainte-Montaine"],"xy":[[-17.711,-377.219],[-8.318,-398.064],[2.196,-394.33]],"area_km2":127.12,"excess":null,"k":null},{"n":62,"st":["Soême","Sainte-Montaine","Ennordre"],"xy":[[-8.318,-398.064],[2.196,-394.33],[5.777,-401.848]],"area_km2":46.21,"excess":null,"k":null},{"n":63,"st":["Vouzon","Soême","Ennordre"],"xy":[[-17.711,-377.219],[-8.318,-398.064],[5.777,-401.848]],"area_km2":129.13,"excess":1.72,"k":6.458e-08},{"n":64,"st":["Soême","Ennordre","Méry"],"xy":[[-8.318,-398.064],[5.777,-401.848],[6.58,-415.916]],"area_km2":97.62,"excess":-1.12,"k":-5.562e-08},{"n":65,"st":["Ennordre","Méry","Morogues"],"xy":[[5.777,-401.848],[6.58,-415.916],[25.551,-418.055]],"area_km2":132.58,"excess":0.87,"k":3.181e-08},{"n":66,"st":["Méry","Morogues","Bourges"],"xy":[[6.58,-415.916],[25.551,-418.055],[8.913,-439.522]],"area_km2":221.42,"excess":2.62,"k":5.737e-08},{"n":69,"st":["Morogues","Bourges","Dun"],"xy":[[25.551,-418.055],[8.913,-439.522],[22.396,-461.294]],"area_km2":325.85,"excess":4.4,"k":6.547e-08},{"n":70,"st":["Bourges","Dun","Morlac"],"xy":[[8.913,-439.522],[22.396,-461.294],[2.726,-480.009]],"area_km2":340.29,"excess":4.19,"k":5.969e-08},{"n":71,"st":["Dun","Morlac","Belvédère"],"xy":[[22.396,-461.294],[2.726,-480.009],[20.949,-477.377]],"area_km2":144.64,"excess":3.64,"k":1.22e-07},{"n":72,"st":["Morlac","Belvédère","Cullan"],"xy":[[2.726,-480.009],[20.949,-477.377],[10.756,-497.942]],"area_km2":173.97,"excess":5.55,"k":1.547e-07},{"n":73,"st":["Morlac","Cullan","Saint-Saturnin"],"xy":[[2.726,-480.009],[10.756,-497.942],[-3.2,-504.97]],"area_km2":153.35,"excess":0.58,"k":1.834e-08},{"n":74,"st":["Cullan","Saint-Saturnin","Laage"],"xy":[[10.756,-497.942],[-3.2,-504.97],[9.469,-522.489]],"area_km2":166.76,"excess":2.32,"k":6.745e-08},{"n":75,"st":["Cullan","Laage","Arpheuille"],"xy":[[10.756,-497.942],[9.469,-522.489],[32.108,-534.484]],"area_km2":285.58,"excess":5.84,"k":9.914e-08},{"n":76,"st":["Laage","Arpheuille","Sermur"],"xy":[[9.469,-522.489],[32.108,-534.484],[13.49,-562.373]],"area_km2":427.36,"excess":1.46,"k":1.656e-08},{"n":77,"st":["Laage","Sermur","Orgnat"],"xy":[[9.469,-522.489],[13.49,-562.373],[-9.228,-547.177]],"area_km2":422.49,"excess":4.48,"k":5.141e-08},{"n":78,"st":["Laage","Orgnat","Evaux"],"xy":[[9.469,-522.489],[-9.228,-547.177],[-9.647,-519.684]],"area_km2":262.19,"excess":3.89,"k":7.193e-08},{"n":79,"st":["Sermur","Orgnat","Bordes"],"xy":[[13.49,-562.373],[-9.228,-547.177],[-10.61,-575.378]],"area_km2":330.84,"excess":1.77,"k":2.594e-08},{"n":80,"st":["Sermur","Bordes","Lafagitière"],"xy":[[13.49,-562.373],[-10.61,-575.378],[-0.3,-588.436]],"area_km2":224.4,"excess":-0.09,"k":-1.944e-09},{"n":81,"st":["Sermur","Lafagitière","Hermant"],"xy":[[13.49,-562.373],[-0.3,-588.436],[24.565,-587.001]],"area_km2":314.13,"excess":3.56,"k":5.494e-08},{"n":82,"st":["Lafagitière","Hermant","Bort"],"xy":[[-0.3,-588.436],[24.565,-587.001],[16.612,-626.499]],"area_km2":485.35,"excess":3.58,"k":3.576e-08},{"n":83,"st":["Lafagitière","Bort","Meimac"],"xy":[[-0.3,-588.436],[16.612,-626.499],[-9.808,-607.925]],"area_km2":345.76,"excess":1.01,"k":1.416e-08},{"n":84,"st":["Bort","Meimac","Aubassin"],"xy":[[16.612,-626.499],[-9.808,-607.925],[-7.711,-650.815]],"area_km2":547.11,"excess":3.29,"k":2.915e-08},{"n":85,"st":["Bort","Aubassin","Violan"],"xy":[[16.612,-626.499],[-7.711,-650.815],[27.471,-656.237]],"area_km2":493.69,"excess":3.61,"k":3.545e-08},{"n":86,"st":["Violan","Aubassin","Bastide"],"xy":[[27.471,-656.237],[-7.711,-650.815],[-9.077,-689.621]],"area_km2":686.33,"excess":3.05,"k":2.154e-08},{"n":87,"st":["Violan","Bastide","Montsalvy"],"xy":[[27.471,-656.237],[-9.077,-689.621],[21.563,-702.561]],"area_km2":747.92,"excess":4.83,"k":3.131e-08},{"n":88,"st":["Bastide","Montsalvy","Rieupeiroux"],"xy":[[-9.077,-689.621],[21.563,-702.561],[0.643,-747.073]],"area_km2":817.29,"excess":2.49,"k":1.477e-08},{"n":89,"st":["Montsalvy","Rieupeiroux","Rodez"],"xy":[[21.563,-702.561],[0.643,-747.073],[27.968,-742.83]],"area_km2":563.75,"excess":2.53,"k":2.176e-08},{"n":90,"st":["Rieupeiroux","Rodez","Lagaste"],"xy":[[0.643,-747.073],[27.968,-742.83],[33.64,-767.051]],"area_km2":342.94,"excess":4.14,"k":5.853e-08},{"n":91,"st":["Rieupeiroux","Lagaste","Saint-George"],"xy":[[0.643,-747.073],[33.64,-767.051],[4.647,-780.962]],"area_km2":519.13,"excess":4.89,"k":4.567e-08},{"n":92,"st":["Lagaste","Saint-George","Cambatjou"],"xy":[[33.64,-767.051],[4.647,-780.962],[27.817,-796.846]],"area_km2":391.42,"excess":2.89,"k":3.58e-08},{"n":93,"st":["Saint-George","Cambatjou","Montredon"],"xy":[[4.647,-780.962],[27.817,-796.846],[7.808,-811.829]],"area_km2":332.48,"excess":3.38,"k":4.929e-08},{"n":94,"st":["Cambatjou","Montredon","Montalet"],"xy":[[27.817,-796.846],[7.808,-811.829],[42.885,-816.761]],"area_km2":312.11,"excess":4.32,"k":6.71e-08},{"n":95,"st":["Montredon","Montalet","Saint-Pons"],"xy":[[7.808,-811.829],[42.885,-816.761],[42.374,-834.257]],"area_km2":308.12,"excess":3.42,"k":5.381e-08},{"n":96,"st":["Montredon","Saint-Pons","Nore"],"xy":[[7.808,-811.829],[42.374,-834.257],[20.814,-845.922]],"area_km2":443.37,"excess":2.75,"k":3.007e-08},{"n":97,"st":["Saint-Pons","Nore","Alaric"],"xy":[[42.374,-834.257],[20.814,-845.922],[34.782,-876.385]],"area_km2":409.85,"excess":4.37,"k":5.169e-08},{"n":98,"st":["Nore","Alaric","Carcassonne"],"xy":[[20.814,-845.922],[34.782,-876.385],[12.098,-869.355]],"area_km2":296.43,"excess":2.18,"k":3.565e-08},{"n":99,"st":["Alaric","Carcassonne","Bugarach"],"xy":[[34.782,-876.385],[12.098,-869.355],[15.061,-908.302]],"area_km2":431.34,"excess":1.64,"k":1.843e-08},{"n":100,"st":["Alaric","Bugarach","Tauch"],"xy":[[34.782,-876.385],[15.061,-908.302],[39.508,-902.686]],"area_km2":334.76,"excess":2.22,"k":3.215e-08},{"n":101,"st":["Bugarach","Tauch","Forceral"],"xy":[[15.061,-908.302],[39.508,-902.686],[41.577,-923.012]],"area_km2":254.27,"excess":2.49,"k":4.748e-08},{"n":102,"st":["Tauch","Forceral","Espira"],"xy":[[39.508,-902.686],[41.577,-923.012],[49.589,-911.857]],"area_km2":92.96,"excess":0.14,"k":7.301e-09},{"n":103,"st":["Forceral","Espira","Vernet"],"xy":[[41.577,-923.012],[49.589,-911.857],[56.835,-923.34]],"area_km2":86.42,"excess":0.5,"k":2.805e-08},{"n":104,"st":["Espira","Vernet","Salces"],"xy":[[49.589,-911.857],[56.835,-923.34],[59.103,-911.856]],"area_km2":54.63,"excess":0.28,"k":2.485e-08},{"n":105,"st":["Bugarach","Forceral","Estella"],"xy":[[15.061,-908.302],[41.577,-923.012],[30.027,-946.825]],"area_km2":400.67,"excess":2.16,"k":2.614e-08},{"n":106,"st":["Forceral","Estella","Camellas"],"xy":[[41.577,-923.012],[30.027,-946.825],[52.78,-954.598]],"area_km2":315.8,"excess":3.74,"k":5.742e-08},{"n":107,"st":["Estella","Camellas","N. D. du Mont"],"xy":[[30.027,-946.825],[52.78,-954.598],[43.157,-975.004]],"area_km2":269.55,"excess":0.75,"k":1.349e-08},{"n":108,"st":["Estella","N. D. du Mont","Secalm"],"xy":[[30.027,-946.825],[43.157,-975.004],[17.124,-990.319]],"area_km2":467.34,"excess":6.33,"k":6.567e-08},{"n":109,"st":["N. D. du Mont","Secalm","Roca"],"xy":[[43.157,-975.004],[17.124,-990.319],[41.903,-995.733]],"area_km2":260.22,"excess":1.17,"k":2.18e-08},{"n":110,"st":["Secalm","Roca","Matagalls"],"xy":[[17.124,-990.319],[41.903,-995.733],[17.271,-1025.462]],"area_km2":435.01,"excess":2.81,"k":3.132e-08},{"n":111,"st":["Secalm","Matagalls","Rodos"],"xy":[[17.124,-990.319],[17.271,-1025.462],[-4.257,-1021.26]],"area_km2":377.97,"excess":2.48,"k":3.181e-08},{"n":112,"st":["Matagalls","Rodos","Matas"],"xy":[[17.271,-1025.462],[-4.257,-1021.26],[8.251,-1058.893]],"area_km2":378.8,"excess":2.74,"k":3.507e-08},{"n":113,"st":["Rodos","Matas","Montserrat"],"xy":[[-4.257,-1021.26],[8.251,-1058.893],[-29.968,-1048.676]],"area_km2":655.25,"excess":6.97,"k":5.157e-08},{"n":114,"st":["Matas","Montserrat","Valvidrera"],"xy":[[8.251,-1058.893],[-29.968,-1048.676],[-7.132,-1069.517]],"area_km2":281.61,"excess":0.06,"k":1.033e-09},{"n":115,"st":["Matas","Valvidrera","Montjouy"],"xy":[[8.251,-1058.893],[-7.132,-1069.517],[0.0,-1075.18]],"area_km2":81.44,"excess":2.37,"k":1.411e-07}];
+const host=document.getElementById('view3d'), tip=document.getElementById('tip');
+if(!window.THREE){host.insertAdjacentHTML('beforeend','<p style="color:#e8e2d4;padding:20px">The 3D view needs three.js from cdnjs, which did not load.</p>');return;}
+const KREF=1/(6371*6371);
+const renderer=new THREE.WebGLRenderer({antialias:true}); renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+host.prepend(renderer.domElement);
+const scene=new THREE.Scene(); scene.background=new THREE.Color(0x1b1a17);
+const cam=new THREE.PerspectiveCamera(35,1,1,20000);
+scene.add(new THREE.AmbientLight(0xffffff,0.55)); const sun=new THREE.DirectionalLight(0xfff4e0,0.8); sun.position.set(-300,500,800); scene.add(sun);
+// chain runs along x: north (Dunkerque) left
+const pts=t=>t.xy.map(([x,y])=>[-y-537.6, x-15]);
+function colour(k){ if(k==null) return new THREE.Color(0x8a857a);
+  if(k<0) return new THREE.Color(0xc0574b);
+  const r=Math.min(k/KREF,3); const lo=new THREE.Color(0x3b86a8), hi=new THREE.Color(0xe0a23c); return lo.lerp(hi,Math.max(0,(r-1)/2)); }
+const group=new THREE.Group(); scene.add(group); const meshes=[];
+const N=10;
+function build(ex,mode){
+  while(group.children.length){const m=group.children.pop(); m.geometry.dispose(); m.material.dispose();}
+  meshes.length=0;
+  TRI.forEach(t=>{
+    const P=pts(t), cx=(P[0][0]+P[1][0]+P[2][0])/3, cy=(P[0][1]+P[1][1]+P[2][1])/3;
+    const k = mode==='ref' ? KREF : t.k;
+    const c = Math.sign(k||0)*Math.sqrt(Math.abs(k||0));   // 1/R, km^-1
+    const pos=[], idx=[]; const id=(i,j)=>i*(N+1)-i*(i-1)/2+j;
+    for(let i=0;i<=N;i++)for(let j=0;j<=N-i;j++){const a=i/N,b=j/N,g=1-a-b;
+      const x=g*P[0][0]+a*P[1][0]+b*P[2][0], y=g*P[0][1]+a*P[1][1]+b*P[2][1];
+      const r2=(x-cx)**2+(y-cy)**2; pos.push(x, (c*(-r2)/2 + c*0)*ex, y);}
+    // lift so the centroid sits at the top of a dome
+    for(let i=0;i<=N;i++)for(let j=0;j<N-i;j++){idx.push(id(i,j),id(i+1,j),id(i,j+1)); if(j<N-i-1) idx.push(id(i+1,j),id(i+1,j+1),id(i,j+1));}
+    const geo=new THREE.BufferGeometry(); geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3)); geo.setIndex(idx); geo.computeVertexNormals();
+    const mat=new THREE.MeshLambertMaterial({color:mode==='ref'?new THREE.Color(0x3b86a8):colour(t.k),side:THREE.DoubleSide});
+    const m=new THREE.Mesh(geo,mat); m.userData=t; group.add(m); meshes.push(m);
+    const e=new THREE.LineSegments(new THREE.EdgesGeometry(geo,30),new THREE.LineBasicMaterial({color:0x1b1a17,transparent:true,opacity:.35})); e.raycast=()=>{}; group.add(e);
+  });
+}
+let az=-0.5, el=0.55, dist=850, tx=0;
+function place(){cam.position.set(tx+dist*Math.cos(el)*Math.sin(az), dist*Math.sin(el), dist*Math.cos(el)*Math.cos(az)); cam.lookAt(tx,0,0);}
+function size(){const w=host.clientWidth,h=host.clientHeight; renderer.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix();}
+function draw(){renderer.render(scene,cam);}
+const ex=document.getElementById('ex'), exv=document.getElementById('exv');
+const mode=()=>document.querySelector('input[name=mode]:checked').value;
+function rebuild(){exv.textContent=ex.value; build(+ex.value,mode()); draw();}
+ex.addEventListener('input',rebuild); document.querySelectorAll('input[name=mode]').forEach(r=>r.addEventListener('change',rebuild));
+document.getElementById('reset').addEventListener('click',()=>{az=-0.5;el=0.55;dist=850;tx=0;place();draw();});
+let drag=null; const el3=renderer.domElement;
+el3.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,shift:e.shiftKey};el3.setPointerCapture(e.pointerId);el3.style.cursor='grabbing';});
+el3.addEventListener('pointerup',e=>{drag=null;el3.style.cursor='grab';});
+const ray=new THREE.Raycaster(), mp=new THREE.Vector2();
+el3.addEventListener('pointermove',e=>{
+  if(drag){const dx=e.clientX-drag.x, dy=e.clientY-drag.y; drag.x=e.clientX; drag.y=e.clientY;
+    if(drag.shift){tx-=dx*dist/600;} else {az-=dx*0.006; el=Math.min(1.5,Math.max(0.05,el+dy*0.006));} place(); draw(); tip.hidden=true; return;}
+  const r=el3.getBoundingClientRect(); mp.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1); ray.setFromCamera(mp,cam);
+  const h=ray.intersectObjects(meshes)[0];
+  if(!h){tip.hidden=true;return;}
+  const t=h.object.userData; const R=t.k>0?Math.round(1/Math.sqrt(t.k)).toLocaleString('en-US')+' km':(t.k==null?'—':'negative');
+  tip.innerHTML='<b>Triangle '+t.n+'</b><br>'+t.st.join(' – ')+'<br>Area '+t.area_km2.toFixed(1)+' km²<br>'+(t.k==null?'Concluded angle: no k':'Excess '+t.excess.toFixed(2)+'″<br>k = '+t.k.toExponential(2)+' km⁻²<br>R = '+R);
+  tip.hidden=false; tip.style.left=Math.min(e.clientX-r.left+14,r.width-310)+'px'; tip.style.top=(e.clientY-r.top+14)+'px';});
+el3.addEventListener('pointerleave',()=>tip.hidden=true);
+el3.addEventListener('wheel',e=>{e.preventDefault(); dist=Math.min(4000,Math.max(80,dist*Math.exp(e.deltaY*0.001))); place(); draw();},{passive:false});
+new ResizeObserver(()=>{size();draw();}).observe(host);
+size(); place(); rebuild();
+})();
 </script>
 </body>
 </html>
